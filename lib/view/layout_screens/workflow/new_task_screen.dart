@@ -1,24 +1,31 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants.dart';
-import 'package:project/shared/defaults.dart';
+import 'package:project/shared/components.dart';
 import 'package:sizer/sizer.dart';
 
 class NewTaskScreen extends StatelessWidget {
-  const NewTaskScreen({Key? key}) : super(key: key);
+  NewTaskScreen({Key? key}) : super(key: key);
+  final TextEditingController taskName = TextEditingController();
+  final TextEditingController assignedEmployees = TextEditingController();
+  final TextEditingController startDate = TextEditingController();
+  final TextEditingController endDate = TextEditingController();
+  final TextEditingController description = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: customAppbar(title: "New Task", context: context, search: false),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: SingleChildScrollView(
+      appBar: CustomAppBar(title: "New Task", search: false),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: [
               newTaskField(
+                controller: taskName,
                 label: "Task Name",
-                validate: () {},
                 hintText: "Task Name",
                 keyboardType: TextInputType.text,
               ),
@@ -26,8 +33,8 @@ class NewTaskScreen extends StatelessWidget {
                 height: 3.h,
               ),
               newTaskField(
+                controller: assignedEmployees,
                 label: "Assigned Employees(multiple)",
-                validate: () {},
                 hintText: "Assigned Employees",
                 keyboardType: TextInputType.text,
               ),
@@ -35,8 +42,8 @@ class NewTaskScreen extends StatelessWidget {
                 height: 3.h,
               ),
               newTaskField(
+                controller: startDate,
                 label: "Start Date",
-                validate: () {},
                 hintText: "Start Date",
                 keyboardType: TextInputType.datetime,
               ),
@@ -44,8 +51,8 @@ class NewTaskScreen extends StatelessWidget {
                 height: 3.h,
               ),
               newTaskField(
+                controller: endDate,
                 label: "End Date",
-                validate: () {},
                 hintText: "End Date",
                 keyboardType: TextInputType.datetime,
               ),
@@ -53,8 +60,8 @@ class NewTaskScreen extends StatelessWidget {
                 height: 3.h,
               ),
               newTaskField(
+                  controller: description,
                   label: "Description",
-                  validate: () {},
                   hintText: "Description",
                   keyboardType: TextInputType.text,
                   maxLines: 5),
@@ -72,25 +79,3 @@ class NewTaskScreen extends StatelessWidget {
     ));
   }
 }
-
-Widget newTaskField(
-        {
-        //required TextEditingController controller,
-        required TextInputType keyboardType,
-        Function? validate,
-        required String label,
-        required String hintText,
-        int maxLines = 1}) =>
-    TextFormField(
-        //controller: controller,
-        keyboardType: keyboardType,
-        validator: (val) {
-          validate!();
-        },
-        maxLines: maxLines,
-        decoration: InputDecoration(
-          hintText: hintText,
-          labelText: label,
-          alignLabelWithHint: false,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-        ));

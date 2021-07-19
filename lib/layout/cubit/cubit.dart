@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project/layout/cubit/states.dart';
 import 'package:project/view/layout_screens/attendence_screen.dart';
-import 'package:project/view/layout_screens/home_screen.dart';
-import 'package:project/view/layout_screens/more_screen.dart';
-import 'package:project/view/layout_screens/projects_screen.dart';
-import 'package:project/view/workflow_screen.dart';
+import 'package:project/view/layout_screens/home/home_screen.dart';
+import 'package:project/view/layout_screens/vacations.dart';
+import 'package:project/view/layout_screens/project/all_projects.dart';
+import 'package:project/view/layout_screens/workflow/workflow_screen.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppInitialState());
@@ -22,7 +22,7 @@ class AppCubit extends Cubit<AppStates> {
     WorkflowScreen(),
     const AttendenceScreen(),
     const HomeScreen(),
-    const ProjectsScreen(),
-    const MoreScreen()
+    ProjectsScreen(),
+    const VacationsScreen()
   ];
 }

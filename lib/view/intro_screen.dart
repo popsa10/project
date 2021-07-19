@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project/shared/defaults.dart';
+import 'package:project/shared/components.dart';
 
-import 'login_screen.dart';
+import 'login/login_screen.dart';
 
 class IntroScreen extends StatelessWidget {
   const IntroScreen({Key? key}) : super(key: key);

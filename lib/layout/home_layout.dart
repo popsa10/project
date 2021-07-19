@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project/constants.dart';
 import 'package:project/layout/cubit/cubit.dart';
 import 'cubit/states.dart';
 
@@ -23,7 +24,8 @@ class HomeLayout extends StatelessWidget {
                     selectedLabelStyle: const TextStyle(
                         fontSize: 11, fontWeight: FontWeight.normal),
                     currentIndex: cubit.currentIndex,
-                    selectedItemColor: Colors.black,
+                    selectedItemColor: kRedColor,
+                    selectedIconTheme: IconThemeData(color: kRedColor),
                     onTap: (value) {
                       cubit.changeNavBar(value);
                     },
@@ -70,7 +72,7 @@ class HomeLayout extends StatelessWidget {
                               width: 17.5,
                             ),
                           ),
-                          label: "More"),
+                          label: "Vacations"),
                     ]),
                 body: cubit.screens[cubit.currentIndex]);
           },
