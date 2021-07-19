@@ -7,7 +7,7 @@ import 'package:sizer/sizer.dart';
 import '../../../../constants.dart';
 
 class InvoicesScreen extends StatelessWidget {
-  InvoicesScreen({Key? key}) : super(key: key);
+  InvoicesScreen({Key key}) : super(key: key);
   final TextEditingController valueController = TextEditingController();
   final TextEditingController expectedDateController = TextEditingController();
   final TextEditingController detailsController = TextEditingController();

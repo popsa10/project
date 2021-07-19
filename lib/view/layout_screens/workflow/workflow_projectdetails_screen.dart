@@ -10,7 +10,7 @@ import '../../../constants.dart';
 import 'new_task_screen.dart';
 
 class ProjectDetails extends StatelessWidget {
-  ProjectDetails({Key? key}) : super(key: key);
+  ProjectDetails({Key key}) : super(key: key);
   final TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {

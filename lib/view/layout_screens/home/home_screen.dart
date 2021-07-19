@@ -10,7 +10,7 @@ import 'package:project/view/notifications_screen/all_notification_screen.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

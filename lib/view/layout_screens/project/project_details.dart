@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants.dart';
 import 'package:project/shared/components.dart';
@@ -9,7 +8,7 @@ import 'package:project/view/layout_screens/project/project_tabbarview/tasks_tab
 import 'package:project/view/layout_screens/project/project_tabbarview/vehicles_tab.dart';
 
 class ProjectDetails extends StatefulWidget {
-  const ProjectDetails({Key? key}) : super(key: key);
+  const ProjectDetails({Key key}) : super(key: key);
 
   @override
   State<ProjectDetails> createState() => _ProjectDetailsState();

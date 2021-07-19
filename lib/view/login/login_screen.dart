@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:project/constants.dart';
 import 'package:project/layout/home_layout.dart';
 import '../../shared/components.dart';
@@ -10,7 +9,7 @@ import '../../shared/components.dart';
 class LoginScreen extends StatelessWidget {
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +82,7 @@ class LoginScreen extends StatelessWidget {
                           controller: passwordController,
                           suffix: Icon(
                             Icons.visibility,
-                            color: HexColor("#DFDFDF"),
+                            color: Color(0xffDFDFDF),
                           ),
                           validate: () {},
                           type: TextInputType.visiblePassword,

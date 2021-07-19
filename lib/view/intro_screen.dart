@@ -5,7 +5,7 @@ import 'package:project/shared/components.dart';
 import 'login/login_screen.dart';
 
 class IntroScreen extends StatelessWidget {
-  const IntroScreen({Key? key}) : super(key: key);
+  const IntroScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

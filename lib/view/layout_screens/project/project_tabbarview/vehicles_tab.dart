@@ -6,7 +6,7 @@ import 'package:sizer/sizer.dart';
 import '../../../../constants.dart';
 
 class VehiclesScreen extends StatelessWidget {
-  const VehiclesScreen({Key? key}) : super(key: key);
+  const VehiclesScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -7,9 +7,9 @@ import 'package:project/view/notifications_screen/all_notification_screen.dart';
 import 'package:sizer/sizer.dart';
 
 Widget defaultButton(
-        {required String text,
+        {@required String text,
         Color color = kDefaultButtonColor,
-        required Function onPressed,
+        @required Function onPressed,
         double width = double.infinity,
         double height = 63,
         Color textColor = Colors.white}) =>
@@ -48,14 +48,14 @@ Future<dynamic> navigateToAndFinish(BuildContext context, Widget page) =>
         (route) => false);
 
 Widget defaultFormField(
-        {required TextEditingController controller,
+        {@required TextEditingController controller,
         bool isPassword = false,
-        required String hintText,
-        required Widget suffix,
-        Function? onSubmit,
-        Function? suffixFunction,
-        required Function validate,
-        required TextInputType type}) =>
+        @required String hintText,
+        @required Widget suffix,
+        Function onSubmit,
+        Function suffixFunction,
+        @required Function validate,
+        @required TextInputType type}) =>
     TextFormField(
       controller: controller,
       keyboardType: type,
@@ -68,9 +68,7 @@ Widget defaultFormField(
         hintText: hintText,
         hintStyle: const TextStyle(color: Color(0xffC8C8C8), fontSize: 11),
         suffixIcon: InkWell(
-          onTap: () {
-            suffixFunction!();
-          },
+          onTap: suffixFunction,
           child: suffix,
         ),
         fillColor: kTextFormFieldColor,
@@ -79,18 +77,14 @@ Widget defaultFormField(
     );
 
 Widget newTaskField(
-        {required TextEditingController controller,
-        required TextInputType keyboardType,
-        Function? validate,
-        required String label,
-        required String hintText,
+        {@required TextEditingController controller,
+        @required TextInputType keyboardType,
+        @required String label,
+        @required String hintText,
         int maxLines = 1}) =>
     TextFormField(
         controller: controller,
         keyboardType: keyboardType,
-        validator: (val) {
-          validate!();
-        },
         maxLines: maxLines,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -107,7 +101,7 @@ Widget newTaskField(
         ));
 
 Widget defaultText(
-        {required String text,
+        {@required String text,
         double fontSize = 20,
         FontWeight fontWeight = FontWeight.normal,
         Color color = Colors.white}) =>
@@ -121,10 +115,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool search;
   const CustomAppBar({
-    Key? key,
-    required this.title,
+    @required this.title,
     this.search = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

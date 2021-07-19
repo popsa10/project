@@ -9,7 +9,7 @@ import 'create_project_screen.dart';
 import 'project_details.dart';
 
 class ProjectsScreen extends StatelessWidget {
-  ProjectsScreen({Key? key}) : super(key: key);
+  ProjectsScreen({Key key}) : super(key: key);
   final TextEditingController searchController = TextEditingController();
 
   @override

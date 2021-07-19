@@ -5,7 +5,7 @@ import 'package:project/shared/components.dart';
 import 'package:sizer/sizer.dart';
 
 class NewTaskScreen extends StatelessWidget {
-  NewTaskScreen({Key? key}) : super(key: key);
+  NewTaskScreen({Key key}) : super(key: key);
   final TextEditingController taskName = TextEditingController();
   final TextEditingController assignedEmployees = TextEditingController();
   final TextEditingController startDate = TextEditingController();

@@ -5,7 +5,7 @@ import 'package:project/shared/components.dart';
 import 'package:sizer/sizer.dart';
 
 class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({Key? key}) : super(key: key);
+  const DetailsScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

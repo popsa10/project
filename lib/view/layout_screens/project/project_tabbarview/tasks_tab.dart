@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:project/shared/components.dart';
 import 'package:project/view/layout_screens/workflow/new_task_screen.dart';
-import 'package:project/view/layout_screens/workflow/workflow_projectdetails_screen.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../constants.dart';
 
 class TasksScreen extends StatelessWidget {
-  const TasksScreen({Key? key}) : super(key: key);
+  const TasksScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

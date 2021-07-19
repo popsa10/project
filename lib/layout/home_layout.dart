@@ -7,7 +7,7 @@ import 'package:project/layout/cubit/cubit.dart';
 import 'cubit/states.dart';
 
 class HomeLayout extends StatelessWidget {
-  const HomeLayout({Key? key}) : super(key: key);
+  const HomeLayout({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,7 +25,7 @@ class HomeLayout extends StatelessWidget {
                         fontSize: 11, fontWeight: FontWeight.normal),
                     currentIndex: cubit.currentIndex,
                     selectedItemColor: kRedColor,
-                    selectedIconTheme: IconThemeData(color: kRedColor),
+                    selectedIconTheme: const IconThemeData(color: kRedColor),
                     onTap: (value) {
                       cubit.changeNavBar(value);
                     },

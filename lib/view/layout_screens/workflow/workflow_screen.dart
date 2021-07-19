@@ -6,7 +6,7 @@ import 'package:project/view/layout_screens/workflow/workflow_projectdetails_scr
 import 'package:sizer/sizer.dart';
 
 class WorkflowScreen extends StatelessWidget {
-  WorkflowScreen({Key? key}) : super(key: key);
+  WorkflowScreen({Key key}) : super(key: key);
   final TextEditingController searchController = TextEditingController();
 
   @override

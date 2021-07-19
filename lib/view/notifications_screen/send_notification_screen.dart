@@ -5,7 +5,7 @@ import 'package:sizer/sizer.dart';
 
 class SendNotificationScreen extends StatelessWidget {
   SendNotificationScreen({
-    Key? key,
+    Key key,
   }) : super(key: key);
 
   final String imployeesValue = "";

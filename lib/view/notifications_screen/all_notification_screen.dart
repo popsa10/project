@@ -6,7 +6,7 @@ import 'package:sizer/sizer.dart';
 import '../../constants.dart';
 
 class AllNotificationScreen extends StatelessWidget {
-  const AllNotificationScreen({Key? key}) : super(key: key);
+  const AllNotificationScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ Widget buildNotificationCard(context) => Container(
               "6 june 2021",
               style: Theme.of(context)
                   .textTheme
-                  .caption!
+                  .caption
                   .copyWith(color: Colors.grey),
             ),
             SizedBox(
@@ -64,7 +64,7 @@ Widget buildNotificationCard(context) => Container(
               "Mohamed Ahmed add report",
               style: Theme.of(context)
                   .textTheme
-                  .headline6!
+                  .headline6
                   .copyWith(color: Colors.black),
             ),
           ],
