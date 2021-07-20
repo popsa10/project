@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project/constants.dart';
 import 'package:project/view/notifications_screen/all_notification_screen.dart';
+import 'package:project/view/vehicle/all_vehicles_screen.dart';
 import 'package:sizer/sizer.dart';
 
 Widget defaultButton(
@@ -167,7 +168,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 icon: Image.asset(
                   "assets/images/Mask Group 31.png",
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  navigateTo(context, AllVehicles());
+                },
               ),
             ],
           ),
