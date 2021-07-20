@@ -4,7 +4,14 @@ import 'package:project/constants.dart';
 import 'package:project/layout/cubit/cubit.dart';
 import 'package:project/shared/bloc_observer.dart';
 import 'package:project/view/intro_screen.dart';
+import 'package:project/view/layout_screens/attendence_screen.dart';
+import 'package:project/view/layout_screens/payroll_screen.dart';
+import 'package:project/view/layout_screens/reduction_screen.dart';
 import 'package:sizer/sizer.dart';
+
+import 'view/layout_screens/detuction_list.dart';
+import 'view/layout_screens/payroll _sheet_1.dart';
+
 
 void main() {
   Bloc.observer = MyBlocObserver();
@@ -20,7 +27,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(scaffoldBackgroundColor: kSecondaryColor),
         home: Sizer(builder: (context, orientation, deviceType) {
-          return const IntroScreen();
+          return    Detuction_list(); //IntroScreen();
         }));
   }
 }
