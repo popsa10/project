@@ -49,7 +49,7 @@ class InvoicesScreen extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Expanded(
-                                    child: newTaskField(
+                                    child: customTextField(
                                         controller: valueController,
                                         keyboardType: TextInputType.number,
                                         label: "Value",
@@ -59,7 +59,7 @@ class InvoicesScreen extends StatelessWidget {
                                     width: 1.w,
                                   ),
                                   Expanded(
-                                    child: newTaskField(
+                                    child: customTextField(
                                         controller: expectedDateController,
                                         keyboardType: TextInputType.datetime,
                                         label: "Expected Date",
@@ -70,7 +70,7 @@ class InvoicesScreen extends StatelessWidget {
                               SizedBox(
                                 height: 2.h,
                               ),
-                              newTaskField(
+                              customTextField(
                                   controller: detailsController,
                                   keyboardType: TextInputType.text,
                                   label: "Details",

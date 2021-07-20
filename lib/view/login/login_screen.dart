@@ -57,7 +57,7 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(
                         height: 5,
                       ),
-                      defaultFormField(
+                      customTextFormField(
                           hintText: "Username",
                           controller: userNameController,
                           suffix: Image.asset(
@@ -77,7 +77,7 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(
                         height: 5,
                       ),
-                      defaultFormField(
+                      customTextFormField(
                           hintText: "Password",
                           controller: passwordController,
                           suffix: Icon(

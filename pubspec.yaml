@@ -38,6 +38,8 @@ dependencies:
   sizer: ^2.0.13
   dio: ^4.0.0
   shared_preferences: ^2.0.6
+  responsive_framework:
+  responsive_builder: ^0.4.1
 
 
 dev_dependencies:

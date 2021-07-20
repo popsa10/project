@@ -5,6 +5,7 @@ import 'package:project/shared/components.dart';
 import 'login/login_screen.dart';
 
 class IntroScreen extends StatelessWidget {
+  static String id = "Intro Screen";
   const IntroScreen({Key key}) : super(key: key);
 
   @override

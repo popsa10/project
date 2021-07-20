@@ -23,30 +23,13 @@ class SendNotificationScreen extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              InputDecorator(
-                  decoration: InputDecoration(
-                    labelText: "Assigned To (Multiple)",
-                    labelStyle: const TextStyle(
-                        color: kPrimaryColor, fontWeight: FontWeight.bold),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                      value: imployeesValue,
-                      hint: const Text(
-                        "Select Imployees",
-                        style: TextStyle(fontSize: 14),
-                      ),
-                      isExpanded: true,
-                      items: [],
-                      isDense: true,
-                    ),
-                  )),
-              SizedBox(
-                height: 4.h,
-              ),
-              newTaskField(
+              customDropdownMenu(
+                  label: "Assigned To (Multiple)",
+                  hintText: "Select Imployees",
+                  value: imployeesValue,
+                  itemList: [],
+                  onChanged: (value) {}),
+              customTextField(
                   controller: notesController,
                   keyboardType: TextInputType.text,
                   label: "Notes",

@@ -31,13 +31,13 @@ class _ProjectDetailsState extends State<ProjectDetails>
     TasksScreen(),
     InvoicesScreen()
   ];
+
   @override
   Widget build(BuildContext context) {
     TabController tabController =
         TabController(length: tabs.length, vsync: this);
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey[200],
         appBar: CustomAppBar(title: "New building Project", search: false),
         body: Column(
           children: [

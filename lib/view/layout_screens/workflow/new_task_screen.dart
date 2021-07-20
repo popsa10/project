@@ -23,7 +23,7 @@ class NewTaskScreen extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              newTaskField(
+              customTextField(
                 controller: taskName,
                 label: "Task Name",
                 hintText: "Task Name",
@@ -32,7 +32,7 @@ class NewTaskScreen extends StatelessWidget {
               SizedBox(
                 height: 3.h,
               ),
-              newTaskField(
+              customTextField(
                 controller: assignedEmployees,
                 label: "Assigned Employees(multiple)",
                 hintText: "Assigned Employees",
@@ -41,7 +41,7 @@ class NewTaskScreen extends StatelessWidget {
               SizedBox(
                 height: 3.h,
               ),
-              newTaskField(
+              customTextField(
                 controller: startDate,
                 label: "Start Date",
                 hintText: "Start Date",
@@ -50,7 +50,7 @@ class NewTaskScreen extends StatelessWidget {
               SizedBox(
                 height: 3.h,
               ),
-              newTaskField(
+              customTextField(
                 controller: endDate,
                 label: "End Date",
                 hintText: "End Date",
@@ -59,7 +59,7 @@ class NewTaskScreen extends StatelessWidget {
               SizedBox(
                 height: 3.h,
               ),
-              newTaskField(
+              customTextField(
                   controller: description,
                   label: "Description",
                   hintText: "Description",

@@ -41,7 +41,7 @@ class WorkflowScreen extends StatelessWidget {
                 itemBuilder: (context, index) =>
                     buildProjectCard(context, ProjectDetails()),
                 separatorBuilder: (context, index) => SizedBox(
-                      height: 2.h,
+                      height: 2,
                     ),
                 itemCount: 3),
           ),

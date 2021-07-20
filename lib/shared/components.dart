@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:project/constants.dart';
 import 'package:project/view/notifications_screen/all_notification_screen.dart';
 import 'package:sizer/sizer.dart';
@@ -14,9 +15,7 @@ Widget defaultButton(
         double height = 63,
         Color textColor = Colors.white}) =>
     GestureDetector(
-      onTap: () {
-        onPressed();
-      },
+      onTap: onPressed,
       child: Container(
         height: height,
         width: width,
@@ -47,7 +46,7 @@ Future<dynamic> navigateToAndFinish(BuildContext context, Widget page) =>
         ),
         (route) => false);
 
-Widget defaultFormField(
+Widget customTextFormField(
         {@required TextEditingController controller,
         bool isPassword = false,
         @required String hintText,
@@ -76,29 +75,39 @@ Widget defaultFormField(
       ),
     );
 
-Widget newTaskField(
-        {@required TextEditingController controller,
-        @required TextInputType keyboardType,
-        @required String label,
-        @required String hintText,
-        int maxLines = 1}) =>
-    TextFormField(
-        controller: controller,
-        keyboardType: keyboardType,
-        maxLines: maxLines,
-        decoration: InputDecoration(
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          hintText: hintText,
-          hintStyle:
-              const TextStyle(color: kGreyColor, fontWeight: FontWeight.bold),
-          labelText: label,
-          labelStyle: const TextStyle(
-              color: kPrimaryColor, fontWeight: FontWeight.bold),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-              borderRadius: BorderRadius.circular(10)),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-        ));
+Widget customTextField({
+  @required TextEditingController controller,
+  TextInputType keyboardType,
+  @required String label,
+  @required String hintText,
+  int maxLines = 1,
+  IconData suffix,
+  Function suffixFunction,
+  bool showLabel = true,
+}) =>
+    Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: TextField(
+          controller: controller,
+          keyboardType: keyboardType,
+          maxLines: maxLines,
+          decoration: InputDecoration(
+            floatingLabelBehavior: showLabel
+                ? FloatingLabelBehavior.always
+                : FloatingLabelBehavior.never,
+            suffixIcon: InkWell(onTap: suffixFunction, child: Icon(suffix)),
+            hintText: hintText,
+            hintStyle:
+                const TextStyle(color: kGreyColor, fontWeight: FontWeight.bold),
+            labelText: label,
+            labelStyle: const TextStyle(
+                color: kPrimaryColor, fontWeight: FontWeight.bold),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(10)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          )),
+    );
 
 Widget defaultText(
         {@required String text,
@@ -182,7 +191,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       hintStyle: const TextStyle(
                           color: Color(0xffC8C8C8), fontSize: 11),
                     ),
-                    toolbarOptions: ToolbarOptions(),
                   )),
                   SizedBox(
                     width: 1.w,
@@ -474,4 +482,34 @@ Widget buildProjectTasksCard() => Stack(
                   bottomEnd: Radius.circular(20))),
         ),
       ],
+    );
+
+Widget customDropdownMenu(
+        {String label,
+        dynamic value,
+        String hintText,
+        List<DropdownMenuItem<dynamic>> itemList,
+        Function onChanged}) =>
+    Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: InputDecorator(
+          decoration: InputDecoration(
+            labelText: label,
+            labelStyle: const TextStyle(
+                color: kPrimaryColor, fontWeight: FontWeight.bold),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton(
+              value: value,
+              hint: Text(
+                hintText,
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+              isExpanded: true,
+              items: itemList,
+              isDense: true,
+              onChanged: onChanged,
+            ),
+          )),
     );

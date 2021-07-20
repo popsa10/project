@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project/constants.dart';
 import 'package:project/shared/bloc_observer.dart';
 import 'package:project/view/intro_screen.dart';
+import 'package:project/view/vehicle/all_vehicles_screen.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:sizer/sizer.dart';
 
 void main() {
@@ -15,13 +17,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-            scaffoldBackgroundColor: kScaffoldColor,
-            backgroundColor: Colors.grey),
-        home: Sizer(builder: (context, orientation, deviceType) {
-          return const IntroScreen();
-        }));
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          scaffoldBackgroundColor: kScaffoldColor,
+          backgroundColor: Colors.grey),
+      home: Sizer(builder: (context, orientation, deviceType) => IntroScreen()),
+    );
   }
 }
