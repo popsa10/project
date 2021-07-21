@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project/constants.dart';
-import 'package:project/layout/cubit/cubit.dart';
+import 'cubit/cubit.dart';
 import 'cubit/states.dart';
 
 class HomeLayout extends StatelessWidget {

@@ -1,22 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project/shared/components.dart';
+import 'login_screen.dart';
 
-import 'login/login_screen.dart';
-
-class IntroScreen extends StatelessWidget {
-  static String id = "Intro Screen";
-  const IntroScreen({Key key}) : super(key: key);
+class FirstScreen extends StatelessWidget {
+  const FirstScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Stack(
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: Container(
+        width: size.width,
+        height: size.height,
+        child: Stack(
           alignment: AlignmentDirectional.bottomCenter,
           children: [
             Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage(
                         "assets/images/First Screen – 1.png",

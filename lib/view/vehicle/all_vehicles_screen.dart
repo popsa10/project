@@ -15,54 +15,55 @@ class AllVehicles extends StatelessWidget {
       appBar: CustomAppBar(
         title: "Vehicles",
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-            child: defaultButton(
-                text: "Add New Vehicle",
-                onPressed: () {
-                  navigateTo(context, CreateNewVehicles());
-                },
-                color: kPrimaryColor),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              defaultContainer(
-                  Color(0xffF1FBF5), Color(0xff039712), "Working", 10),
-              defaultContainer(
-                  Color(0xffFBE9CC), Color(0xffFCC163), "Maintainance", 20),
-              defaultContainer(
-                  Color(0xffFCECE4), Color(0xffCE3827), "Accident", 30),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+              child: defaultButton(
+                  text: "Add New Vehicle",
+                  onPressed: () {
+                    navigateTo(context, CreateNewVehicles());
+                  },
+                  color: kPrimaryColor),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                defaultText(
-                    text: "Vehiicle List (14)",
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-                Image.asset(
-                  "assets/images/Icon metro-sort-desc.png",
-                  width: 5.w,
-                ),
+                defaultContainer(
+                    Color(0xffF1FBF5), Color(0xff039712), "Working", 10),
+                defaultContainer(
+                    Color(0xffFBE9CC), Color(0xffFCC163), "Maintainance", 20),
+                defaultContainer(
+                    Color(0xffFCECE4), Color(0xffCE3827), "Accident", 30),
               ],
             ),
-          ),
-          Expanded(
-            child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  defaultText(
+                      text: "Vehiicle List (14)",
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                  Image.asset(
+                    "assets/images/Icon metro-sort-desc.png",
+                    width: 5.w,
+                  ),
+                ],
+              ),
+            ),
+            ListView.separated(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) => vehicleDetails(context),
                 separatorBuilder: (context, index) => SizedBox(
                       height: 2.h,
                     ),
                 itemCount: 3),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

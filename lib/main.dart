@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project/constants.dart';
 import 'package:project/shared/bloc_observer.dart';
-import 'package:project/view/intro_screen.dart';
-import 'package:project/view/vehicle/all_vehicles_screen.dart';
-import 'package:responsive_framework/responsive_framework.dart';
+import 'package:project/view/login_main/first_screen.dart';
+import 'package:project/view/login_main/intro_screen.dart';
 import 'package:sizer/sizer.dart';
 
 void main() {
@@ -17,11 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'ECC Erp',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          scaffoldBackgroundColor: kScaffoldColor,
-          backgroundColor: Colors.grey),
+        scaffoldBackgroundColor: kScaffoldColor,
+      ),
       home: Sizer(builder: (context, orientation, deviceType) => IntroScreen()),
     );
   }
