@@ -7,16 +7,9 @@ import 'package:project/view/layout_screens/project/project_tabbarview/invoices_
 import 'package:project/view/layout_screens/project/project_tabbarview/tasks_tab.dart';
 import 'package:project/view/layout_screens/project/project_tabbarview/vehicles_tab.dart';
 
-class ProjectDetails extends StatefulWidget {
-  const ProjectDetails({Key key}) : super(key: key);
-
-  @override
-  State<ProjectDetails> createState() => _ProjectDetailsState();
-}
-
-class _ProjectDetailsState extends State<ProjectDetails>
-    with TickerProviderStateMixin {
-  List<Widget> tabs = [
+class ProjectDetails extends StatelessWidget {
+  ProjectDetails({Key key}) : super(key: key);
+  final List<Widget> tabs = [
     Text("Details"),
     Text("Employees"),
     Text("Vehicles"),
@@ -24,7 +17,7 @@ class _ProjectDetailsState extends State<ProjectDetails>
     Text("Invoices"),
   ];
 
-  List<Widget> screens = [
+  final List<Widget> screens = [
     DetailsScreen(),
     EmployeesScreen(),
     VehiclesScreen(),
@@ -34,40 +27,38 @@ class _ProjectDetailsState extends State<ProjectDetails>
 
   @override
   Widget build(BuildContext context) {
-    TabController tabController =
-        TabController(length: tabs.length, vsync: this);
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(title: "New building Project", search: false),
-        body: Column(
-          children: [
-            TabBar(
-              indicatorSize: TabBarIndicatorSize.tab,
-              indicatorPadding: EdgeInsets.symmetric(horizontal: 10),
-              controller: tabController,
-              tabs: tabs,
-              labelColor: kTitleColor,
-              physics: BouncingScrollPhysics(),
-              indicatorColor: kRedColor,
-              isScrollable: true,
-              padding: EdgeInsets.only(
-                top: 15,
+        body: DefaultTabController(
+          initialIndex: 0,
+          length: tabs.length,
+          child: Column(
+            children: [
+              TabBar(
+                indicatorSize: TabBarIndicatorSize.tab,
+                tabs: tabs,
+                labelColor: kTitleColor,
+                physics: BouncingScrollPhysics(),
+                indicatorColor: kRedColor,
+                isScrollable: true,
+                labelPadding:
+                    EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                unselectedLabelColor: kGreyColor,
               ),
-              unselectedLabelColor: kGreyColor,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-                color: Colors.grey[200],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Divider(
+                  thickness: 1,
+                  color: Colors.grey[200],
+                ),
               ),
-            ),
-            Expanded(
-                child: TabBarView(
-              controller: tabController,
-              children: screens,
-            ))
-          ],
+              Expanded(
+                  child: TabBarView(
+                children: screens,
+              ))
+            ],
+          ),
         ),
       ),
     );

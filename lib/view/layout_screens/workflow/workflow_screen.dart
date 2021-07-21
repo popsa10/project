@@ -16,36 +16,38 @@ class WorkflowScreen extends StatelessWidget {
         title: "Workflow",
         search: true,
       ),
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            color: Colors.white,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 2.h, vertical: 2.h),
-                  child: defaultText(
-                    text: "projects List (3)",
-                    color: Colors.black,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              color: Colors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 2.h, vertical: 2.h),
+                    child: defaultText(
+                      text: "projects List (3)",
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
+              margin: EdgeInsets.zero,
             ),
-            margin: EdgeInsets.zero,
-          ),
-          Expanded(
-            child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
+            ListView.separated(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) =>
                     buildProjectCard(context, ProjectDetails()),
                 separatorBuilder: (context, index) => SizedBox(
                       height: 2,
                     ),
                 itemCount: 3),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
