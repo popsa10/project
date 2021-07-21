@@ -182,9 +182,18 @@ PreferredSizeWidget customAppbar({
         ),
       ),
     );
-PreferredSizeWidget mycustomAppbar({bool canpop=false,required BuildContext context,  bool havebell=true,  bool haveNotf=false,required String titel}){
+
+PreferredSizeWidget mycustomAppbar(
+    {bool canpop = false,
+    required BuildContext context,double toolbarHeight=100.0,
+    bool havebell = true,  bool search = false,
+      TextEditingController? controller,
+    bool haveNotf = false,
+    required String title}) {
   return AppBar(
-    elevation: 0,toolbarHeight: 75,    automaticallyImplyLeading: false,
+    elevation: 0,
+    toolbarHeight: toolbarHeight,
+    automaticallyImplyLeading: false,
     backgroundColor: Colors.transparent,
     flexibleSpace: Container(
       decoration: const BoxDecoration(
@@ -193,7 +202,7 @@ PreferredSizeWidget mycustomAppbar({bool canpop=false,required BuildContext cont
               bottomStart: Radius.circular(15),
               bottomEnd: Radius.circular(15))),
       child: Padding(
-        padding: const EdgeInsets.only(left: 8, right: 8,top: 8),
+        padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
         child: Column(
           children: [
             SizedBox(
@@ -202,46 +211,52 @@ PreferredSizeWidget mycustomAppbar({bool canpop=false,required BuildContext cont
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-               canpop?   GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Image.asset("assets/images/Group 1558.png" )):SizedBox(),
+                canpop
+                    ? GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Image.asset("assets/images/Group 1558.png"))
+                    : SizedBox(),
                 Text(
-                  titel,
+                  title,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
                 ),
                 Row(
                   children: [
-             if(havebell)       Container(
-                      height: 30,
-                      width: 30,
-                      child: Center(
-                        child: Stack(
-                          children: [
-                            Icon(
-                              Elusive.bell,
-                              size: 30,
-                              color: Colors.white,
-                            ),
-                            if(haveNotf)     Align(
-                              alignment: Alignment.topRight,
-                              child: Container(
-                                height: 10,
-                                width: 10,
-                                decoration: new BoxDecoration(
-                                  color: Colors.orange,
-                                  shape: BoxShape.circle,
-                                ),
+                    if (havebell)
+                      Container(
+                        height: 30,
+                        width: 30,
+                        child: Center(
+                          child: Stack(
+                            children: [
+                              Icon(
+                                Elusive.bell,
+                                size: 30,
+                                color: Colors.white,
                               ),
-                            )
-                          ],
+                              if (haveNotf)
+                                Align(
+                                  alignment: Alignment.topRight,
+                                  child: Container(
+                                    height: 10,
+                                    width: 10,
+                                    decoration: new BoxDecoration(
+                                      color: Colors.orange,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                )
+                            ],
+                          ),
                         ),
+                        //color: Colors.indigo,
                       ),
-                      //color: Colors.indigo,
-                    ),
                     Image.asset(
                       "assets/images/Mask Group 31.png",
                       height: 50,
@@ -251,6 +266,45 @@ PreferredSizeWidget mycustomAppbar({bool canpop=false,required BuildContext cont
                 )
               ],
             ),
+            if (search == true)
+              Row(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 6.5.h,
+                      child: defaultFormField(
+                          controller: controller ?? TextEditingController(),
+                          hintText: "Search",
+                          suffix: Padding(
+                            padding: const EdgeInsets.only(right: 0),
+                            child: Container(
+                              height: 2.h,
+                              width: 2.w,
+                              decoration: BoxDecoration(
+                                  color: kPrimaryColor,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: const Icon(
+                                Icons.search,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          validate: () {},
+                          type: TextInputType.text),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 1.w,
+                  ),
+                  Container(
+                      height: 6.5.h,
+                      width: 13.w,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image:
+                                  AssetImage("assets/images/Group 1890.png")))),
+                ],
+              ),
           ],
         ),
       ),

@@ -15,7 +15,7 @@ class Payroll_Sheet_1 extends StatelessWidget {
       appBar:
       
       mycustomAppbar(
-          titel: 'Mohamed Ahmed\n Salary',
+          title: 'Mohamed Ahmed\n Salary',
           context: context,
 canpop: true,
           havebell: true,

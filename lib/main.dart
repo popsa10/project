@@ -7,8 +7,10 @@ import 'package:project/view/intro_screen.dart';
 import 'package:project/view/layout_screens/attendence_screen.dart';
 import 'package:project/view/layout_screens/payroll_screen.dart';
 import 'package:project/view/layout_screens/reduction_screen.dart';
+import 'package:project/view/layout_screens/reports.dart';
 import 'package:sizer/sizer.dart';
 
+import 'view/layout_screens/create_report.dart';
 import 'view/layout_screens/detuction_list.dart';
 import 'view/layout_screens/payroll _sheet_1.dart';
 
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(scaffoldBackgroundColor: kSecondaryColor),
         home: Sizer(builder: (context, orientation, deviceType) {
-          return    Detuction_list(); //IntroScreen();
+          return    Reports(); //IntroScreen();
         }));
   }
 }

@@ -9,7 +9,7 @@ class Bounce_Screen extends StatelessWidget {
     return Scaffold(
         appBar: mycustomAppbar(
             context: context,
-            titel: "Bounce",
+            title: "Bounce",
             haveNotf: false,
             havebell: false,
             canpop: true),

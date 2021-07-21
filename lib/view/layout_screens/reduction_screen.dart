@@ -10,7 +10,7 @@ class Reduction_Screen extends StatelessWidget {
     return Scaffold(
         appBar: mycustomAppbar(
             context: context,
-            titel: "Reduction",
+            title: "Reduction",
             haveNotf: false,
             havebell: false,
             canpop: true),
