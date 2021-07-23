@@ -4,13 +4,21 @@ import 'package:project/shared/components.dart';
 import 'package:sizer/sizer.dart';
 
 class CreateProjectScreen extends StatelessWidget {
-  const CreateProjectScreen({Key key}) : super(key: key);
+  CreateProjectScreen({Key key}) : super(key: key);
+  final projectName = TextEditingController();
+  final projectType = TextEditingController();
+  final value = TextEditingController();
+  final invoiceNo = TextEditingController();
+  final invoiceValue = TextEditingController();
+  final expectedDate = TextEditingController();
+  final startDate = TextEditingController();
+  final endDate = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         title: "Create Project",
         search: false,
       ),
@@ -28,21 +36,36 @@ class CreateProjectScreen extends StatelessWidget {
                     fontSize: 17),
               ),
               SizedBox(
-                height: 3.h,
+                height: 1.h,
               ),
-              customTextField(hintText: "Project Name", label: "Project Name"),
-              customTextField(hintText: "Project Type", label: "Design"),
+              customTextField(
+                  hintText: "Project Name",
+                  label: "Project Name",
+                  controller: projectName,
+                  keyboardType: TextInputType.name),
+              customTextField(
+                  hintText: "Project Type",
+                  label: "Design",
+                  controller: projectType,
+                  keyboardType: TextInputType.text),
               Row(
                 children: [
                   Expanded(
                     child: customTextField(
-                        hintText: "Enter value", label: "Value"),
+                        hintText: "Enter value",
+                        label: "Value",
+                        controller: value,
+                        keyboardType: TextInputType.number),
                   ),
                   SizedBox(
                     width: 10,
                   ),
                   Expanded(
-                    child: customTextField(hintText: "2", label: "Invoice No."),
+                    child: customTextField(
+                        hintText: "2",
+                        label: "Invoice No.",
+                        controller: invoiceNo,
+                        keyboardType: TextInputType.number),
                   ),
                 ],
               ),
@@ -57,7 +80,10 @@ class CreateProjectScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: customTextField(
-                        hintText: "Invoice value", label: "Value"),
+                        hintText: "Invoice value",
+                        label: "Value",
+                        controller: invoiceValue,
+                        keyboardType: TextInputType.number),
                   ),
                   SizedBox(
                     width: 10,
@@ -66,6 +92,18 @@ class CreateProjectScreen extends StatelessWidget {
                     child: customTextField(
                         hintText: "Selected date",
                         label: "Expected Date",
+                        controller: expectedDate,
+                        keyboardType: TextInputType.datetime,
+                        suffixFunction: () {
+                          showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2050))
+                              .then((value) {
+                            expectedDate.text = value.toString();
+                          });
+                        },
                         suffix: Icons.calendar_today),
                   ),
                 ],
@@ -73,10 +111,34 @@ class CreateProjectScreen extends StatelessWidget {
               customTextField(
                   hintText: "Enter start date",
                   label: "Start Date",
+                  controller: startDate,
+                  keyboardType: TextInputType.datetime,
+                  suffixFunction: () {
+                    showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2050))
+                        .then((value) {
+                      startDate.text = value.toString();
+                    });
+                  },
                   suffix: Icons.calendar_today),
               customTextField(
                   hintText: "Enter End date",
                   label: "End Date",
+                  controller: endDate,
+                  keyboardType: TextInputType.datetime,
+                  suffixFunction: () {
+                    showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2050))
+                        .then((value) {
+                      endDate.text = value.toString();
+                    });
+                  },
                   suffix: Icons.calendar_today),
               customDropdownMenu(
                   onChanged: (value) {},

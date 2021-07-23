@@ -29,17 +29,11 @@ class NewTaskScreen extends StatelessWidget {
                 hintText: "Task Name",
                 keyboardType: TextInputType.text,
               ),
-              SizedBox(
-                height: 3.h,
-              ),
               customTextField(
                 controller: assignedEmployees,
                 label: "Assigned Employees(multiple)",
                 hintText: "Assigned Employees",
                 keyboardType: TextInputType.text,
-              ),
-              SizedBox(
-                height: 3.h,
               ),
               customTextField(
                 controller: startDate,
@@ -47,17 +41,11 @@ class NewTaskScreen extends StatelessWidget {
                 hintText: "Start Date",
                 keyboardType: TextInputType.datetime,
               ),
-              SizedBox(
-                height: 3.h,
-              ),
               customTextField(
                 controller: endDate,
                 label: "End Date",
                 hintText: "End Date",
                 keyboardType: TextInputType.datetime,
-              ),
-              SizedBox(
-                height: 3.h,
               ),
               customTextField(
                   controller: description,
@@ -66,7 +54,7 @@ class NewTaskScreen extends StatelessWidget {
                   keyboardType: TextInputType.text,
                   maxLines: 5),
               SizedBox(
-                height: 10.h,
+                height: 3.h,
               ),
               defaultButton(
                   text: "Create New Task",

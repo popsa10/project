@@ -60,8 +60,7 @@ class ProjectsScreen extends StatelessWidget {
             ListView.separated(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) =>
-                    buildProjectCard(context, ProjectDetails()),
+                itemBuilder: (context, index) => buildProjectCard(context),
                 separatorBuilder: (context, index) => SizedBox(
                       height: 2.h,
                     ),
@@ -72,3 +71,124 @@ class ProjectsScreen extends StatelessWidget {
     );
   }
 }
+
+Widget buildProjectCard(context) => InkWell(
+      onTap: () {
+        navigateTo(context, ProjectDetails());
+      },
+      child: Container(
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadiusDirectional.only(
+                bottomEnd: Radius.circular(10),
+                bottomStart: Radius.circular(10))),
+        margin: EdgeInsets.zero,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              alignment: AlignmentDirectional.topEnd,
+              children: [
+                Container(
+                  height: 22.h,
+                  width: double.infinity,
+                  color: Colors.yellow,
+                ),
+                Container(
+                  margin: const EdgeInsets.all(15),
+                  width: 25.w,
+                  height: 5.h,
+                  decoration: BoxDecoration(
+                      color: kRedColor,
+                      borderRadius: BorderRadius.circular(10)),
+                  child:
+                      Center(child: defaultText(text: "Design", fontSize: 15)),
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 2.h, vertical: 2.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      defaultText(
+                          text: "New building project",
+                          color: kRedColor,
+                          fontWeight: FontWeight.bold),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      Row(
+                        children: [
+                          defaultText(
+                              text: "start Date :  ",
+                              color: kTitleColor,
+                              fontSize: 13),
+                          defaultText(
+                              text: "2-2-2021", color: kGreyColor, fontSize: 13)
+                        ],
+                      ),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      Row(
+                        children: [
+                          defaultText(
+                              text: "Deadline :    ",
+                              color: kTitleColor,
+                              fontSize: 13),
+                          defaultText(
+                              text: "2-2-2021", color: kGreyColor, fontSize: 13)
+                        ],
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 10.w,
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      defaultText(
+                          text: "Completed",
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: kGreenColor)
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
+Widget defaultContainer(
+        Color color, Color borderColor, String text, int number) =>
+    Container(
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: color,
+        border: Border.all(color: borderColor),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          defaultText(
+              text: "$number",
+              color: Color(0xff707070),
+              fontWeight: FontWeight.bold),
+          defaultText(
+            text: text,
+            color: Color(0xff707070),
+          )
+        ],
+      ),
+    );

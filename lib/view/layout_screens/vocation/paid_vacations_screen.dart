@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:project/shared/components.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../constants.dart';
 
 class PaidVocationScreen extends StatelessWidget {
@@ -34,7 +33,7 @@ class PaidVocationScreen extends StatelessWidget {
 Widget buildVacationCard() => Container(
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.only(left: 20),
+        padding: const EdgeInsets.only(left: 20, bottom: 10),
         child: Column(
           children: [
             Row(

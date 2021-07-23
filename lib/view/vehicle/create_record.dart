@@ -4,7 +4,10 @@ import 'package:project/shared/components.dart';
 import 'package:sizer/sizer.dart';
 
 class CreateRecord extends StatelessWidget {
-  const CreateRecord({Key key}) : super(key: key);
+  CreateRecord({Key key}) : super(key: key);
+
+  final date = TextEditingController();
+  final description = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,17 +32,29 @@ class CreateRecord extends StatelessWidget {
               height: 2.h,
             ),
             customTextField(
-                //controller: controller,
+                controller: date,
                 label: "Date",
                 suffix: Icons.calendar_today,
+                keyboardType: TextInputType.datetime,
+                suffixFunction: () {
+                  showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2050))
+                      .then((value) {
+                    date.text = value.toString();
+                  });
+                },
                 hintText: "Select Date"),
             customTextField(
-                //controller: controller,
+                controller: description,
                 label: "Description",
+                keyboardType: TextInputType.text,
                 hintText: "Add Description"),
             Spacer(),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
               child: defaultButton(
                   text: "Save Record", onPressed: () {}, color: kPrimaryColor),
             ),

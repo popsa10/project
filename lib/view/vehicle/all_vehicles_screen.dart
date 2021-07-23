@@ -215,3 +215,26 @@ Widget vehicleDetails(
         ],
       ),
     );
+
+Widget defaultContainer(
+        Color color, Color borderColor, String text, int number) =>
+    Container(
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: color,
+        border: Border.all(color: borderColor),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          defaultText(
+              text: "$number",
+              color: Color(0xff707070),
+              fontWeight: FontWeight.bold),
+          defaultText(
+            text: text,
+            color: Color(0xff707070),
+          )
+        ],
+      ),
+    );

@@ -9,13 +9,13 @@ class VehicleDetails extends StatelessWidget {
   List<Widget> screens = [Details(), MaintainanceScreen()];
   List<Widget> tabs = [
     Text("Details"),
-    Text("Maintainance"),
+    Text("Maintenance"),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(
+        appBar: CustomAppBar(
           title: "Toyota 15",
           search: false,
         ),

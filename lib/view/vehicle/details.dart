@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project/shared/components.dart';
 import 'package:project/view/layout_screens/project/project_tabbarview/details_tab.dart';
@@ -38,7 +39,7 @@ class Details extends StatelessWidget {
                     buildRowForDetails("Vehicle Status", "Working"),
                     buildRowForDetails("Kilometers", "150"),
                     buildRowForDetails("Insurance Date Start", "2-6-2021"),
-                    buildRowForDetails("Lisence Number", "123456"),
+                    buildRowForDetails("License Number", "123456"),
                     buildRowForDetails("License Date End", "2-6-2021"),
                     buildRowForDetails("Examination Date", "2-6-2021"),
                     buildRowForDetails("Issued To", "Mohamed ahmed"),
@@ -55,7 +56,7 @@ class Details extends StatelessWidget {
                       height: 1.5.h,
                     ),
                     const Padding(
-                      padding: EdgeInsets.only(right: 20, bottom: 10),
+                      padding: EdgeInsets.only(bottom: 10),
                       child: Text(
                         "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
                         style: TextStyle(

@@ -17,7 +17,7 @@ class EmployeesScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               defaultText(
-                text: "Projects List (4)",
+                text: "Employees List (4)",
                 color: Colors.black,
               ),
               Image.asset(
@@ -95,10 +95,9 @@ Widget employeeCard() => Container(
               ),
             ],
           ),
-          const Spacer(),
-          Icon(
-            Icons.more_vert,
-            color: Colors.grey[300],
+          Spacer(),
+          PopupMenuButton(
+            itemBuilder: (context) => [],
           )
         ],
       ),

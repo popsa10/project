@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttericon/elusive_icons.dart';
 import 'package:project/constants.dart';
 import 'package:project/shared/components.dart';
 import 'package:project/view/notifications_screen/all_notification_screen.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeScreen extends StatelessWidget {
+  final bool haveNotf = true;
   const HomeScreen({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -40,10 +42,26 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.only(right: 5),
             child: IconButton(
               onPressed: () {
-                navigateTo(context, const AllNotificationScreen());
+                navigateTo(context, AllNotificationScreen());
               },
-              icon: Image.asset(
-                "assets/images/Icon.png",
+              icon: Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  Icon(
+                    Icons.notifications_none,
+                    size: 30,
+                    color: Colors.white,
+                  ),
+                  if (haveNotf)
+                    Container(
+                      height: 10,
+                      width: 10,
+                      decoration: new BoxDecoration(
+                        color: Colors.orange,
+                        shape: BoxShape.circle,
+                      ),
+                    )
+                ],
               ),
             ),
           )
