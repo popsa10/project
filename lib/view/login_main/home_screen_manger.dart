@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:fluttericon/elusive_icons.dart';
 import 'package:project/constants.dart';
 import 'package:project/shared/components.dart';
-import 'package:project/view/notifications_screen/all_notification_screen.dart';
+import 'package:project/view/notifications/all_notification_screen.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeScreen extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/shared/components.dart';
-import 'package:project/view/notifications_screen/send_notification_screen.dart';
+import 'package:project/view/notifications/send_notification_screen.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../constants.dart';

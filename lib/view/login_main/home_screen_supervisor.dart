@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/elusive_icons.dart';
 import 'package:project/shared/components.dart';
-import 'package:project/view/notifications_screen/all_notification_screen.dart';
+import 'package:project/view/notifications/all_notification_screen.dart';
 import '../../constants.dart';
 
 class HomeScreenSupervisor extends StatelessWidget {

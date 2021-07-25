@@ -39,6 +39,10 @@ dependencies:
   dio: ^4.0.0
   shared_preferences: ^2.0.6
   fluttericon: ^2.0.0
+  dotted_border:
+  some_calendar:
+  fluttertoast:
+  conditional_builder:
 
 
 

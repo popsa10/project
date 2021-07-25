@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/elusive_icons.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/constants.dart';
-import 'package:project/view/notifications_screen/all_notification_screen.dart';
+import 'package:project/view/notifications/all_notification_screen.dart';
 import 'package:project/view/vehicle/all_vehicles_screen.dart';
 import 'package:sizer/sizer.dart';
 
@@ -51,7 +52,7 @@ Widget customTextFormField(
         @required Widget suffix,
         Function onSubmit,
         Function suffixFunction,
-        @required Function validate,
+        Function validate,
         @required TextInputType type}) =>
     TextFormField(
       controller: controller,
@@ -395,3 +396,13 @@ PreferredSizeWidget mycustomAppbar(
     ),
   );
 }
+
+Future<bool> showToast({@required String text, Color color}) =>
+    Fluttertoast.showToast(
+        msg: text,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 5,
+        backgroundColor: color,
+        textColor: Colors.white,
+        fontSize: 16.0);
