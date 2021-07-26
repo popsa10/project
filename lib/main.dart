@@ -5,14 +5,18 @@ import 'package:project/layout/cubit/cubit.dart';
 import 'package:project/shared/bloc_observer.dart';
 import 'package:project/view/intro_screen.dart';
 import 'package:project/view/layout_screens/attendence_screen.dart';
+import 'package:project/view/layout_screens/locations_screen.dart';
 import 'package:project/view/layout_screens/payroll_screen.dart';
 import 'package:project/view/layout_screens/reduction_screen.dart';
 import 'package:project/view/layout_screens/reports.dart';
 import 'package:sizer/sizer.dart';
 
+import 'view/layout_screens/add_location.dart';
+import 'view/layout_screens/attendance1.dart';
 import 'view/layout_screens/create_report.dart';
 import 'view/layout_screens/detuction_list.dart';
 import 'view/layout_screens/payroll _sheet_1.dart';
+import 'view/layout_screens/report_details.dart';
 
 
 void main() {
@@ -29,7 +33,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(scaffoldBackgroundColor: kSecondaryColor),
         home: Sizer(builder: (context, orientation, deviceType) {
-          return    Reports(); //IntroScreen();
+          return    Attendance1(); //IntroScreen();
         }));
   }
 }

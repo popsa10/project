@@ -359,7 +359,7 @@ class _Detuction_listState extends State<Detuction_list> {
               onSelected: (String value){
                 print('You Click on po up menu item $value');
               },
-            ) ],
+            )  ],
         ),
       ),
     );

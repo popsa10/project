@@ -42,7 +42,7 @@ canpop: true,
                   color: Colors.white,
                   borderRadius: BorderRadiusDirectional.only(
                       topStart: Radius.circular(25),
-                      bottomStart: Radius.circular(25))),
+                       topEnd:  Radius.circular(25))),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
