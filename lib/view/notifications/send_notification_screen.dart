@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants.dart';
 import 'package:project/shared/components.dart';
-import 'package:sizer/sizer.dart';
 
 class SendNotificationScreen extends StatelessWidget {
   SendNotificationScreen({

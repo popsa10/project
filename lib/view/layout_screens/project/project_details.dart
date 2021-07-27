@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants.dart';
+import 'package:project/model/all_projects_model.dart';
 import 'package:project/shared/components.dart';
 import 'package:project/view/layout_screens/project/project_tabbarview/details_tab.dart';
 import 'package:project/view/layout_screens/project/project_tabbarview/employees_tab.dart';
@@ -8,7 +9,8 @@ import 'package:project/view/layout_screens/project/project_tabbarview/tasks_tab
 import 'package:project/view/layout_screens/project/project_tabbarview/vehicles_tab.dart';
 
 class ProjectDetails extends StatelessWidget {
-  ProjectDetails({Key key}) : super(key: key);
+  final Project projectModel;
+  ProjectDetails({Key key, this.projectModel}) : super(key: key);
   final List<Widget> tabs = [
     Text("Details"),
     Text("Employees"),
@@ -17,7 +19,7 @@ class ProjectDetails extends StatelessWidget {
     Text("Invoices"),
   ];
 
-  final List<Widget> screens = [
+  List<Widget> screens = [
     DetailsScreen(),
     EmployeesScreen(),
     VehiclesScreen(),
@@ -49,7 +51,6 @@ class ProjectDetails extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Divider(
-                  thickness: 1,
                   color: Colors.grey[200],
                 ),
               ),

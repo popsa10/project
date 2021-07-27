@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:project/model/vehicle_model.dart';
 import 'package:project/shared/components.dart';
 import '../../constants.dart';
 import 'details.dart';
 import 'maintainance_screen.dart';
 
 class VehicleDetails extends StatelessWidget {
-  VehicleDetails({Key key}) : super(key: key);
-  List<Widget> screens = [Details(), MaintainanceScreen()];
-  List<Widget> tabs = [
+  final Vehicle vehicleModel;
+  VehicleDetails({Key key, this.vehicleModel}) : super(key: key);
+  final List<Widget> screens = [
+    Details(
+      vehicleModel,
+    ),
+    MaintainanceScreen()
+  ];
+  final List<Widget> tabs = [
     Text("Details"),
     Text("Maintenance"),
   ];
@@ -16,7 +23,7 @@ class VehicleDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
-          title: "Toyota 15",
+          title: vehicleModel.name,
           search: false,
         ),
         body: DefaultTabController(

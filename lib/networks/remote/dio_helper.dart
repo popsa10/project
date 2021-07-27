@@ -26,7 +26,7 @@ class DioHelper {
       {@required String url,
       Map<String, dynamic> query,
       String token,
-      @required Map<String, dynamic> data}) async {
+      Map<String, dynamic> data}) async {
     dio.options.headers = {
       "Authorization": token ?? "",
       "Content-Type": "application/json",

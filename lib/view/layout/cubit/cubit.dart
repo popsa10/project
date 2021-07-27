@@ -6,7 +6,6 @@ import 'package:project/view/layout_screens/attendence_screen.dart';
 import 'package:project/view/layout_screens/vocation/vacations.dart';
 import 'package:project/view/layout_screens/project/all_projects.dart';
 import 'package:project/view/layout_screens/workflow/workflow_screen.dart';
-import 'package:project/view/login_main/home_screen_manger.dart';
 import 'package:project/view/login_main/home_screen_supervisor.dart';
 
 class AppCubit extends Cubit<AppStates> {

@@ -43,6 +43,10 @@ dependencies:
   some_calendar:
   fluttertoast:
   conditional_builder:
+  firebase_messaging: "^10.0.4"
+  firebase_core: "^1.4.0"
+  get_storage: ^2.0.3
+  expansion_tile_card:
 
 
 

@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project/model/vehicle_model.dart';
 import 'package:project/shared/components.dart';
 import 'package:project/view/layout_screens/project/project_tabbarview/details_tab.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../constants.dart';
-import 'add_new_vehicle.dart';
 
 class Details extends StatelessWidget {
-  const Details({Key key}) : super(key: key);
+  final Vehicle vehicle;
+  Details(this.vehicle);
 
   @override
   Widget build(BuildContext context) {

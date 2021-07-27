@@ -77,7 +77,7 @@ Widget customTextFormField(
 Widget customTextField({
   @required TextEditingController controller,
   TextInputType keyboardType,
-  @required String label,
+  String label,
   @required String hintText,
   int maxLines = 1,
   IconData suffix,
@@ -188,7 +188,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   "assets/images/Mask Group 31.png",
                 ),
                 onPressed: () {
-                  navigateTo(context, AllVehicles());
+                  navigateTo(context, AllVehiclesScreen());
                 },
               ),
             ],
@@ -342,10 +342,13 @@ PreferredSizeWidget mycustomAppbar(
                         ),
                         //color: Colors.indigo,
                       ),
-                    Image.asset(
-                      "assets/images/Mask Group 31.png",
-                      height: 50,
-                      width: 50,
+                    InkWell(
+                      onTap: () {},
+                      child: Image.asset(
+                        "assets/images/Mask Group 31.png",
+                        height: 50,
+                        width: 50,
+                      ),
                     )
                   ],
                 )

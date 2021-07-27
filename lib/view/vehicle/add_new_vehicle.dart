@@ -171,7 +171,7 @@ class CreateNewVehicles extends StatelessWidget {
                 alignment: Alignment.center,
                 child: TextButton(
                   onPressed: () {
-                    navigateToAndFinish(context, AllVehicles());
+                    navigateToAndFinish(context, AllVehiclesScreen());
                   },
                   child: Text(
                     "Return To All vehicle",
