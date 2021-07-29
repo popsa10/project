@@ -1,13 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:project/model/vehicle/vehicle_model.dart';
 import 'package:project/shared/components.dart';
 import 'package:project/view/layout_screens/project/project_tabbarview/details_tab.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../constants.dart';
-import 'add_new_vehicle.dart';
 
 class Details extends StatelessWidget {
-  const Details({Key key}) : super(key: key);
+  final Vehicle vehicle;
+  Details(this.vehicle);
 
   @override
   Widget build(BuildContext context) {
@@ -25,24 +27,32 @@ class Details extends StatelessWidget {
               Container(
                 height: 25.h,
                 width: double.infinity,
-                color: Colors.yellow,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: NetworkImage("${baseUrl + vehicle.carPhoto}"))),
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildRowForDetails("Vehicle Number", "32"),
-                    buildRowForDetails("Vehicle Name", "Toyota corolla"),
-                    buildRowForDetails("Vehicle Model", "Toyota"),
-                    buildRowForDetails("Vehicle Status", "Working"),
-                    buildRowForDetails("Kilometers", "150"),
-                    buildRowForDetails("Insurance Date Start", "2-6-2021"),
-                    buildRowForDetails("Lisence Number", "123456"),
-                    buildRowForDetails("License Date End", "2-6-2021"),
-                    buildRowForDetails("Examination Date", "2-6-2021"),
-                    buildRowForDetails("Issued To", "Mohamed ahmed"),
-                    buildRowForDetails("Assigned Location", "Location 1"),
+                    buildRowForDetails("Vehicle Number", vehicle.id.toString()),
+                    buildRowForDetails("Vehicle Name", vehicle.name),
+                    buildRowForDetails("Vehicle Model", vehicle.model),
+                    buildRowForDetails("Vehicle Status", vehicle.status),
+                    buildRowForDetails(
+                        "Kilometers", vehicle.kilometer.toString()),
+                    buildRowForDetails("Insurance Date Start",
+                        DateFormat.yMMMd().format(vehicle.insuranceDateStart)),
+                    buildRowForDetails(
+                        "License Number", vehicle.licenseNumber.toString()),
+                    buildRowForDetails("License Date End",
+                        DateFormat.yMMMd().format(vehicle.licenseDateEnd)),
+                    buildRowForDetails("Examination Date",
+                        DateFormat.yMMMd().format(vehicle.examinationDate)),
+                    buildRowForDetails("Issued To", vehicle.user.name),
+                    buildRowForDetails(
+                        "Assigned Location", vehicle.locations.first.location),
                     SizedBox(
                       height: 1.5.h,
                     ),
@@ -54,10 +64,10 @@ class Details extends StatelessWidget {
                     SizedBox(
                       height: 1.5.h,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(right: 20, bottom: 10),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 10),
                       child: Text(
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+                        vehicle.notes,
                         style: TextStyle(
                             fontWeight: FontWeight.normal, color: kGreyColor),
                       ),
@@ -79,23 +89,26 @@ class Details extends StatelessWidget {
                               fontWeight: FontWeight.normal,
                               color: kTitleColor),
                         ),
-                        Row(
-                          children: [
-                            Image.asset(
-                              "assets/images/Icon feather-eye.png",
-                              height: 2.h,
-                            ),
-                            SizedBox(
-                              width: 1.w,
-                            ),
-                            const Text(
-                              "view",
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontWeight: FontWeight.bold,
-                                  color: kRedColor),
-                            ),
-                          ],
+                        InkWell(
+                          onTap: () {},
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                "assets/images/Icon feather-eye.png",
+                                height: 2.h,
+                              ),
+                              SizedBox(
+                                width: 1.w,
+                              ),
+                              const Text(
+                                "view",
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.bold,
+                                    color: kRedColor),
+                              ),
+                            ],
+                          ),
                         )
                       ],
                     ),
@@ -111,23 +124,26 @@ class Details extends StatelessWidget {
                               fontWeight: FontWeight.normal,
                               color: kTitleColor),
                         ),
-                        Row(
-                          children: [
-                            Image.asset(
-                              "assets/images/Icon feather-eye.png",
-                              height: 2.h,
-                            ),
-                            SizedBox(
-                              width: 1.w,
-                            ),
-                            const Text(
-                              "view",
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontWeight: FontWeight.bold,
-                                  color: kRedColor),
-                            ),
-                          ],
+                        InkWell(
+                          onTap: () {},
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                "assets/images/Icon feather-eye.png",
+                                height: 2.h,
+                              ),
+                              SizedBox(
+                                width: 1.w,
+                              ),
+                              const Text(
+                                "view",
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.bold,
+                                    color: kRedColor),
+                              ),
+                            ],
+                          ),
                         )
                       ],
                     ),
@@ -143,23 +159,26 @@ class Details extends StatelessWidget {
                               fontWeight: FontWeight.normal,
                               color: kTitleColor),
                         ),
-                        Row(
-                          children: [
-                            Image.asset(
-                              "assets/images/Icon feather-eye.png",
-                              height: 2.h,
-                            ),
-                            SizedBox(
-                              width: 1.w,
-                            ),
-                            const Text(
-                              "view",
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontWeight: FontWeight.bold,
-                                  color: kRedColor),
-                            ),
-                          ],
+                        InkWell(
+                          onTap: () {},
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                "assets/images/Icon feather-eye.png",
+                                height: 2.h,
+                              ),
+                              SizedBox(
+                                width: 1.w,
+                              ),
+                              Text(
+                                "view",
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.bold,
+                                    color: kRedColor),
+                              ),
+                            ],
+                          ),
                         )
                       ],
                     ),

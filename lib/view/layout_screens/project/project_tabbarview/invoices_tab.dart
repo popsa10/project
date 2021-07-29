@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:project/shared/components.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../constants.dart';
 
 class InvoicesScreen extends StatelessWidget {
@@ -27,6 +26,9 @@ class InvoicesScreen extends StatelessWidget {
                     return Container(
                       width: double.infinity,
                       child: Dialog(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        insetPadding: EdgeInsets.symmetric(horizontal: 10),
                         backgroundColor: Colors.white,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(

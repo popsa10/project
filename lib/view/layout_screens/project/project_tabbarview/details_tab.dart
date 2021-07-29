@@ -1,11 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:project/constants.dart';
+import 'package:project/model/all_projects_model.dart';
 import 'package:project/shared/components.dart';
+import 'package:project/shared/cubit/app_cubit.dart';
+import 'package:project/shared/cubit/app_states.dart';
 import 'package:sizer/sizer.dart';
 
 class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({Key key}) : super(key: key);
+  final Project model;
+  const DetailsScreen({this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +32,17 @@ class DetailsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     defaultContainer(const Color(0xffF1FBF5),
-                        const Color(0xff039712), "Tasks", 50),
-                    defaultContainer(const Color(0xffFCECE4),
-                        const Color(0xffCE3827), "Employees", 22),
-                    defaultContainer(const Color(0xffFBE9CC),
-                        const Color(0xffFCC163), "Vehicles", 44),
+                        const Color(0xff039712), "Tasks", model.task.length),
+                    defaultContainer(
+                        const Color(0xffFCECE4),
+                        const Color(0xffCE3827),
+                        "Employees",
+                        model.employees.length),
+                    defaultContainer(
+                        const Color(0xffFBE9CC),
+                        const Color(0xffFCC163),
+                        "Vehicles",
+                        model.vehicles.length),
                   ],
                 ),
               ),
@@ -39,8 +51,11 @@ class DetailsScreen extends StatelessWidget {
                 children: [
                   Container(
                     height: 25.h,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                      image: NetworkImage(baseUrl + model.photo),
+                    )),
                     width: double.infinity,
-                    color: Colors.yellow,
                   ),
                   Container(
                     margin: const EdgeInsets.all(15),
@@ -59,37 +74,44 @@ class DetailsScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildRowForDetails("Project Name", "New building Project"),
-                    buildRowForDetails("Project Value", "25000 SAR"),
-                    buildRowForDetails("Invoice Number", "3"),
-                    buildRowForDetails("Project Type", "Design"),
-                    buildRowForDetails("Start Date", "2-2-2021"),
-                    buildRowForDetails("End Date", "2-6-2021"),
-                    buildRowForDetails("Location", "Location-1"),
-                    buildRowForDetails("Task Creator", "Khaled Ali"),
+                    buildRowForDetails("Project Name", model.name),
+                    buildRowForDetails("Project Value", model.value),
+                    buildRowForDetails(
+                        "Invoice Number", model.invoicesNo.toString()),
+                    buildRowForDetails("Project Type", model.type),
+                    buildRowForDetails("Start Date",
+                        DateFormat("y-m-d").format(model.endDate)),
+                    buildRowForDetails(
+                        "End Date", DateFormat("y-m-d").format(model.endDate)),
+                    buildRowForDetails("Location", model.location.location),
+                    buildRowForDetails(
+                        "Task Creator", model.taskCreator.first.name),
                     SizedBox(
                       height: 1.5.h,
                     ),
-                    const Text(
-                      "Notes",
+                    Text(
+                      "notes",
                       style: TextStyle(
                           fontWeight: FontWeight.normal, color: kTitleColor),
                     ),
                     SizedBox(
                       height: 1.5.h,
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(right: 20, bottom: 10),
                       child: Text(
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+                        model.notes,
                         style: TextStyle(
                             fontWeight: FontWeight.normal, color: kGreyColor),
                       ),
                     ),
-                    const Text(
-                      "view On Map",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: kRedColor),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "view On Map",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: kRedColor),
+                      ),
                     ),
                     SizedBox(
                       height: 1.h,
@@ -275,6 +297,29 @@ Widget buildRowForDetails(String title, String text) => Padding(
             style:
                 const TextStyle(color: kGreyColor, fontWeight: FontWeight.bold),
           ),
+        ],
+      ),
+    );
+
+Widget defaultContainer(
+        Color color, Color borderColor, String text, int number) =>
+    Container(
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: color,
+        border: Border.all(color: borderColor),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          defaultText(
+              text: "$number",
+              color: Color(0xff707070),
+              fontWeight: FontWeight.bold),
+          defaultText(
+            text: text,
+            color: Color(0xff707070),
+          )
         ],
       ),
     );

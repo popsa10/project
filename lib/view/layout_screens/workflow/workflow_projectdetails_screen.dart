@@ -16,12 +16,12 @@ class ProjectDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: const CustomAppBar(
+        appBar: CustomAppBar(
           title: "Workflow",
           search: true,
         ),
         body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+          physics: BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -202,3 +202,131 @@ class ProjectDetails extends StatelessWidget {
     );
   }
 }
+
+Widget buildProjectTasksCard() => Stack(
+      alignment: AlignmentDirectional.topStart,
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadiusDirectional.only(
+                  topStart: Radius.circular(15), topEnd: Radius.circular(15))),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            child: Column(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 1.w,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        defaultText(
+                            text: "6 june 2021 - - - - - 16 june 2021",
+                            color: kTitleColor,
+                            fontSize: 12),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        defaultText(
+                            text: "Task :  NewTask -1",
+                            color: kGreyColor,
+                            fontSize: 12),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        defaultText(
+                            text: "Task Admin :   Khaled Ali",
+                            color: kGreyColor,
+                            fontSize: 12),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        defaultText(
+                            text: "Assigned To",
+                            color: kGreyColor,
+                            fontSize: 12),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        CircleAvatar(
+                          radius: 25,
+                          backgroundColor: Colors.grey[300],
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 9.w,
+                          ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                          defaultText(
+                              text: "Completed",
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: kGreenColor)
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 1.w,
+                    ),
+                    PopupMenuButton(
+                      itemBuilder: (context) => [],
+                      color: Colors.grey[100],
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                Container(
+                  height: 1,
+                  color: kGreyColor,
+                ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      defaultText(
+                          text: "More detailed",
+                          color: kTitleColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal),
+                      const Text(
+                        "Add Note",
+                        style: TextStyle(
+                            color: kGreenColor,
+                            decoration: TextDecoration.underline),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        Container(
+          width: 3.w,
+          height: 9.h,
+          decoration: const BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadiusDirectional.only(
+                  topStart: Radius.circular(20),
+                  bottomEnd: Radius.circular(20))),
+        ),
+      ],
+    );

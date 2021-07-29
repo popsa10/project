@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants.dart';
+import 'package:project/model/all_projects_model.dart';
 import 'package:project/shared/components.dart';
 import 'package:sizer/sizer.dart';
 
 class EmployeesScreen extends StatelessWidget {
-  const EmployeesScreen({Key key}) : super(key: key);
+  final Project model;
+  const EmployeesScreen({Key key, this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class EmployeesScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               defaultText(
-                text: "Projects List (4)",
+                text: "Employees List (${model.employees.length})",
                 color: Colors.black,
               ),
               Image.asset(
@@ -29,18 +31,19 @@ class EmployeesScreen extends StatelessWidget {
         ),
         Expanded(
           child: ListView.separated(
-              itemBuilder: (context, index) => employeeCard(),
+              itemBuilder: (context, index) =>
+                  employeeCard(model.employees[index]),
               separatorBuilder: (context, index) => SizedBox(
                     height: 2.h,
                   ),
-              itemCount: 4),
+              itemCount: model.taskCreator.length),
         )
       ],
     );
   }
 }
 
-Widget employeeCard() => Container(
+Widget employeeCard(Employee model) => Container(
       padding: const EdgeInsets.all(10),
       color: Colors.white,
       child: Row(
@@ -51,9 +54,9 @@ Widget employeeCard() => Container(
             height: 4.h,
             decoration: BoxDecoration(
                 color: kPrimaryColor, borderRadius: BorderRadius.circular(10)),
-            child: const Center(
+            child: Center(
               child: Text(
-                "32",
+                "${model.id}",
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
@@ -71,23 +74,23 @@ Widget employeeCard() => Container(
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
-                "Mohamed Ahmed",
+                model.name,
                 style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
                     color: kRedColor),
               ),
               Text(
-                "Tichnican",
+                model.type,
                 style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.normal,
                     color: kGreyColor),
               ),
               Text(
-                "Regular",
+                model.employeetype,
                 style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.normal,
@@ -95,10 +98,25 @@ Widget employeeCard() => Container(
               ),
             ],
           ),
-          const Spacer(),
-          Icon(
-            Icons.more_vert,
-            color: Colors.grey[300],
+          Spacer(),
+          PopupMenuButton(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  value: 'edit',
+                  child: Text('Edit'),
+                ),
+                PopupMenuItem(
+                  value: 'delete',
+                  child: Text('Delete'),
+                )
+              ];
+            },
+            onSelected: (String value) {
+              print('You Click on po up menu item $value');
+            },
           )
         ],
       ),

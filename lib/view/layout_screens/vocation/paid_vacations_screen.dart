@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:project/model/vacation/paid_vacation_model.dart';
 import 'package:project/shared/components.dart';
+import 'package:project/shared/cubit/app_cubit.dart';
+import 'package:project/shared/cubit/app_states.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../constants.dart';
 
 class PaidVocationScreen extends StatelessWidget {
@@ -11,30 +15,47 @@ class PaidVocationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-          child: defaultButton(
-              text: "Create Vacation", onPressed: () {}, color: kPrimaryColor),
-        ),
-        Expanded(
-          child: ListView.separated(
-              itemBuilder: (context, index) => buildVacationCard(),
-              separatorBuilder: (context, index) => SizedBox(
-                    height: 2.h,
-                  ),
-              itemCount: 1),
-        )
-      ],
+    return BlocConsumer<AppCubit, AppStates>(
+      listener: (context, state) {},
+      bloc: AppCubit()..getAllPaidVacation(),
+      builder: (context, state) {
+        final paidVacation = AppCubit.get(context).paidVacationModel;
+        return paidVacation != null
+            ? SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 10),
+                      child: defaultButton(
+                          text: "Create Vacation",
+                          onPressed: () {},
+                          color: kPrimaryColor),
+                    ),
+                    ListView.separated(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) =>
+                            buildVacationCard(paidVacation.vacations[index]),
+                        separatorBuilder: (context, index) => SizedBox(
+                              height: 2.h,
+                            ),
+                        itemCount: 1)
+                  ],
+                ),
+              )
+            : Center(
+                child: CircularProgressIndicator(),
+              );
+      },
     );
   }
 }
 
-Widget buildVacationCard() => Container(
+Widget buildVacationCard(Vacation model) => Container(
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.only(left: 20),
+        padding: const EdgeInsets.only(left: 20, bottom: 10),
         child: Column(
           children: [
             Row(
@@ -45,9 +66,9 @@ Widget buildVacationCard() => Container(
                   decoration: BoxDecoration(
                       color: kPrimaryColor,
                       borderRadius: BorderRadius.circular(10)),
-                  child: const Center(
+                  child: Center(
                     child: Text(
-                      "32",
+                      model.id.toString(),
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
@@ -57,7 +78,7 @@ Widget buildVacationCard() => Container(
                   width: 10,
                 ),
                 Text(
-                  "Eid Al Adha",
+                  model.name,
                   style: TextStyle(
                       color: kRedColor,
                       fontSize: 17,
@@ -69,7 +90,7 @@ Widget buildVacationCard() => Container(
                   color: kGreenColor,
                   child: Center(
                     child: Text(
-                      "Paid",
+                      model.type,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 17,
@@ -94,7 +115,7 @@ Widget buildVacationCard() => Container(
                     width: 16.w,
                   ),
                   Text(
-                    "20-7-2021",
+                    DateFormat("yyyy-MM-dd").format(model.startDate),
                     style: TextStyle(
                         color: kGreyColor,
                         fontSize: 17,
@@ -116,7 +137,7 @@ Widget buildVacationCard() => Container(
                   width: 18.w,
                 ),
                 Text(
-                  "20-7-2021",
+                  DateFormat("yyyy-MM-dd").format(model.endDate),
                   style: TextStyle(
                       color: kGreyColor,
                       fontSize: 17,
@@ -139,7 +160,7 @@ Widget buildVacationCard() => Container(
                     width: 10.w,
                   ),
                   Text(
-                    "Ali",
+                    model.employee.name,
                     style: TextStyle(
                         color: kGreyColor,
                         fontSize: 15,
@@ -161,10 +182,10 @@ Widget buildVacationCard() => Container(
                   width: 10.w,
                 ),
                 Text(
-                  "Khaled ali",
+                  model.submituser.name,
                   style: TextStyle(
                       color: kGreyColor,
-                      fontSize: 17,
+                      fontSize: 15,
                       fontWeight: FontWeight.normal),
                 ),
               ],

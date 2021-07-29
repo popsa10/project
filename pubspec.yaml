@@ -39,6 +39,17 @@ dependencies:
   dio: ^4.0.0
   shared_preferences: ^2.0.6
   fluttericon: ^2.0.0
+  dotted_border:
+  some_calendar:
+  fluttertoast:
+  conditional_builder:
+  firebase_messaging: "^10.0.4"
+  firebase_core: "^1.4.0"
+  get_storage: ^2.0.3
+  expansion_tile_card:
+  intl:
+  table_calendar:
+  google_maps_flutter:
 
 
 

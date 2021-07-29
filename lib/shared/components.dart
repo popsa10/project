@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/elusive_icons.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/constants.dart';
-import 'package:project/view/notifications_screen/all_notification_screen.dart';
+import 'package:project/view/notifications/all_notification_screen.dart';
 import 'package:project/view/vehicle/all_vehicles_screen.dart';
 import 'package:sizer/sizer.dart';
 
@@ -51,7 +52,7 @@ Widget customTextFormField(
         @required Widget suffix,
         Function onSubmit,
         Function suffixFunction,
-        @required Function validate,
+        Function validate,
         @required TextInputType type}) =>
     TextFormField(
       controller: controller,
@@ -76,7 +77,7 @@ Widget customTextFormField(
 Widget customTextField({
   @required TextEditingController controller,
   TextInputType keyboardType,
-  @required String label,
+  String label,
   @required String hintText,
   int maxLines = 1,
   IconData suffix,
@@ -121,10 +122,13 @@ Widget defaultText(
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool search;
-  const CustomAppBar({
-    @required this.title,
-    this.search = false,
-  });
+  bool haveBell;
+  bool haveNotf;
+  CustomAppBar(
+      {@required this.title,
+      this.search = false,
+      this.haveBell = true,
+      this.haveNotf = true});
 
   @override
   Widget build(BuildContext context) {
@@ -152,21 +156,39 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   const TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
             ),
             actions: [
-              IconButton(
-                icon: Image.asset(
-                  "assets/images/Icon.png",
-                  height: 30,
+              if (haveBell)
+                Center(
+                  child: IconButton(
+                    onPressed: () {
+                      navigateTo(context, AllNotificationScreen());
+                    },
+                    icon: Stack(
+                      alignment: Alignment.topRight,
+                      children: [
+                        Icon(
+                          Icons.notifications_none,
+                          size: 30,
+                          color: Colors.white,
+                        ),
+                        if (haveNotf)
+                          Container(
+                            height: 10,
+                            width: 10,
+                            decoration: new BoxDecoration(
+                              color: Colors.orange,
+                              shape: BoxShape.circle,
+                            ),
+                          )
+                      ],
+                    ),
+                  ),
                 ),
-                onPressed: () {
-                  navigateTo(context, const AllNotificationScreen());
-                },
-              ),
               IconButton(
                 icon: Image.asset(
                   "assets/images/Mask Group 31.png",
                 ),
                 onPressed: () {
-                  navigateTo(context, AllVehicles());
+                  navigateTo(context, AllVehiclesScreen());
                 },
               ),
             ],
@@ -211,278 +233,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(search == true ? 120 : 60);
+  Size get preferredSize => Size.fromHeight(search == true ? 120 : 70);
 }
-
-Widget buildProjectCard(context, Widget page) => InkWell(
-      onTap: () {
-        navigateTo(context, page);
-      },
-      child: Container(
-        decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadiusDirectional.only(
-                bottomEnd: Radius.circular(10),
-                bottomStart: Radius.circular(10))),
-        margin: EdgeInsets.zero,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              alignment: AlignmentDirectional.topEnd,
-              children: [
-                Container(
-                  height: 22.h,
-                  width: double.infinity,
-                  color: Colors.yellow,
-                ),
-                Container(
-                  margin: const EdgeInsets.all(15),
-                  width: 25.w,
-                  height: 5.h,
-                  decoration: BoxDecoration(
-                      color: kRedColor,
-                      borderRadius: BorderRadius.circular(10)),
-                  child:
-                      Center(child: defaultText(text: "Design", fontSize: 15)),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 2.h, vertical: 2.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      defaultText(
-                          text: "New building project",
-                          color: kRedColor,
-                          fontWeight: FontWeight.bold),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      Row(
-                        children: [
-                          defaultText(
-                              text: "start Date :  ",
-                              color: kTitleColor,
-                              fontSize: 13),
-                          defaultText(
-                              text: "2-2-2021", color: kGreyColor, fontSize: 13)
-                        ],
-                      ),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      Row(
-                        children: [
-                          defaultText(
-                              text: "Deadline :    ",
-                              color: kTitleColor,
-                              fontSize: 13),
-                          defaultText(
-                              text: "2-2-2021", color: kGreyColor, fontSize: 13)
-                        ],
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 10.w,
-                      ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      defaultText(
-                          text: "Completed",
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: kGreenColor)
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-
-Widget defaultContainer(
-        Color color, Color borderColor, String text, int number) =>
-    Container(
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: color,
-        border: Border.all(color: borderColor),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: [
-          defaultText(
-              text: "$number",
-              color: Color(0xff707070),
-              fontWeight: FontWeight.bold),
-          defaultText(
-            text: text,
-            color: Color(0xff707070),
-          )
-        ],
-      ),
-    );
-
-Widget buildRowForChart(String text, Color color, int number) => Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: 3.w,
-          height: 3.h,
-          decoration: BoxDecoration(shape: BoxShape.circle, color: color),
-        ),
-        SizedBox(
-          width: 2.w,
-        ),
-        defaultText(
-            text: text,
-            color: Colors.black,
-            fontWeight: FontWeight.normal,
-            fontSize: 16),
-        SizedBox(
-          width: 2.w,
-        ),
-        defaultText(text: "$number", color: Colors.grey, fontSize: 16)
-      ],
-    );
-
-Widget buildProjectTasksCard() => Stack(
-      alignment: AlignmentDirectional.topStart,
-      children: [
-        Container(
-          decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadiusDirectional.only(
-                  topStart: Radius.circular(15), topEnd: Radius.circular(15))),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            child: Column(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 1.w,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        defaultText(
-                            text: "6 june 2021 - - - - - 16 june 2021",
-                            color: kTitleColor,
-                            fontSize: 12),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        defaultText(
-                            text: "Task :  NewTask -1",
-                            color: kGreyColor,
-                            fontSize: 12),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        defaultText(
-                            text: "Task Admin :   Khaled Ali",
-                            color: kGreyColor,
-                            fontSize: 12),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        defaultText(
-                            text: "Assigned To",
-                            color: kGreyColor,
-                            fontSize: 12),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        CircleAvatar(
-                          radius: 25,
-                          backgroundColor: Colors.grey[300],
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 9.w,
-                        ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        defaultText(
-                            text: "Completed",
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: kGreenColor)
-                      ],
-                    ),
-                    SizedBox(
-                      width: 1.w,
-                    ),
-                    const Icon(
-                      Icons.more_vert,
-                      color: kGreyColor,
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 1.h,
-                ),
-                Container(
-                  height: 1,
-                  color: kGreyColor,
-                ),
-                SizedBox(
-                  height: 1.h,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      defaultText(
-                          text: "More detailed",
-                          color: kTitleColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal),
-                      const Text(
-                        "Add Note",
-                        style: TextStyle(
-                            color: kGreenColor,
-                            decoration: TextDecoration.underline),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-        Container(
-          width: 3.w,
-          height: 9.h,
-          decoration: const BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadiusDirectional.only(
-                  topStart: Radius.circular(20),
-                  bottomEnd: Radius.circular(20))),
-        ),
-      ],
-    );
 
 Widget customDropdownMenu(
         {String label,
@@ -590,10 +342,13 @@ PreferredSizeWidget mycustomAppbar(
                         ),
                         //color: Colors.indigo,
                       ),
-                    Image.asset(
-                      "assets/images/Mask Group 31.png",
-                      height: 50,
-                      width: 50,
+                    InkWell(
+                      onTap: () {},
+                      child: Image.asset(
+                        "assets/images/Mask Group 31.png",
+                        height: 50,
+                        width: 50,
+                      ),
                     )
                   ],
                 )
@@ -642,5 +397,37 @@ PreferredSizeWidget mycustomAppbar(
         ),
       ),
     ),
+  );
+}
+
+Future<bool> showToast({@required String text, Color color}) =>
+    Fluttertoast.showToast(
+        msg: text,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 5,
+        backgroundColor: color,
+        textColor: Colors.white,
+        fontSize: 16.0);
+
+Widget custom_row({@required String title, @required String val}) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      Expanded(
+        flex: 1,
+        child: Text(
+          title,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+      ),
+      Expanded(
+        flex: 1,
+        child: Text(
+          val,
+          style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+        ),
+      )
+    ],
   );
 }
