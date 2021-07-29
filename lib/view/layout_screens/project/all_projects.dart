@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:project/constants.dart';
 import 'package:project/model/all_projects_model.dart';
 import 'package:project/shared/components.dart';
@@ -26,7 +27,8 @@ class ProjectsScreen extends StatelessWidget {
         listener: (context, state) {},
         bloc: AppCubit.get(context)..getAllProjects(),
         builder: (context, state) {
-          return AppCubit.get(context).allProject != null
+          final model = AppCubit.get(context).allProject;
+          return model != null
               ? SingleChildScrollView(
                   child: Column(
                     children: [
@@ -82,11 +84,11 @@ class ProjectsScreen extends StatelessWidget {
                                       ));
                                 },
                                 child: buildProjectCard(
-                                    context,
-                                    AppCubit.get(context)
-                                        .allProject
-                                        .projects[index],
-                                    index),
+                                  context,
+                                  AppCubit.get(context)
+                                      .allProject
+                                      .projects[index],
+                                ),
                               ),
                           separatorBuilder: (context, index) => SizedBox(
                                 height: 2.h,
@@ -103,7 +105,7 @@ class ProjectsScreen extends StatelessWidget {
   }
 }
 
-Widget buildProjectCard(context, Project model, index) => Container(
+Widget buildProjectCard(context, Project model) => Container(
       decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadiusDirectional.only(
@@ -120,10 +122,10 @@ Widget buildProjectCard(context, Project model, index) => Container(
                 height: 22.h,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(
-                        model.photo,
-                      ),
-                      fit: BoxFit.cover),
+                    image: NetworkImage(
+                      baseUrl + model.photo,
+                    ),
+                  ),
                 ),
                 width: double.infinity,
               ),
@@ -133,7 +135,8 @@ Widget buildProjectCard(context, Project model, index) => Container(
                 height: 5.h,
                 decoration: BoxDecoration(
                     color: kRedColor, borderRadius: BorderRadius.circular(10)),
-                child: Center(child: defaultText(text: "Design", fontSize: 15)),
+                child:
+                    Center(child: defaultText(text: model.type, fontSize: 15)),
               ),
             ],
           ),
@@ -160,7 +163,7 @@ Widget buildProjectCard(context, Project model, index) => Container(
                             color: kTitleColor,
                             fontSize: 13),
                         defaultText(
-                            text: model.startDate.toString(),
+                            text: DateFormat("y-m-d").format(model.startDate),
                             color: kGreyColor,
                             fontSize: 13)
                       ],
@@ -175,7 +178,7 @@ Widget buildProjectCard(context, Project model, index) => Container(
                             color: kTitleColor,
                             fontSize: 13),
                         defaultText(
-                            text: model.startDate.toString(),
+                            text: DateFormat("y-m-d").format(model.deadline),
                             color: kGreyColor,
                             fontSize: 13)
                       ],
@@ -192,10 +195,10 @@ Widget buildProjectCard(context, Project model, index) => Container(
                     ),
                     defaultText(
                         text: model.status == 0
-                            ? "Completed"
+                            ? "Delayed"
                             : model.status == 1
                                 ? "Ongoing"
-                                : "Delayed",
+                                : "Completed",
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
                         color: kGreenColor)

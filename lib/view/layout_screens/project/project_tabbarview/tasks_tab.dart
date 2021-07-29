@@ -1,6 +1,7 @@
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project/model/all_projects_model.dart';
 import 'package:project/model/all_tasks_model.dart';
 import 'package:project/shared/components.dart';
 import 'package:project/shared/cubit/app_cubit.dart';
@@ -11,7 +12,8 @@ import '../../../../constants.dart';
 import '../task_detail.dart';
 
 class TasksScreen extends StatelessWidget {
-  const TasksScreen({Key key}) : super(key: key);
+  final Project model;
+  const TasksScreen({Key key, this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

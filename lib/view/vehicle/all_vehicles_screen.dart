@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project/model/vehicle_model.dart';
+import 'package:intl/intl.dart';
+import 'package:project/model/vehicle/vehicle_model.dart';
 import 'package:project/shared/components.dart';
 import 'package:project/shared/cubit/app_cubit.dart';
 import 'package:project/shared/cubit/app_states.dart';
 import 'package:project/view/vehicle/vehicle_details.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../constants.dart';
 import 'add_new_vehicle.dart';
 
@@ -21,7 +21,6 @@ class AllVehiclesScreen extends StatelessWidget {
       ),
       body: BlocConsumer<AppCubit, AppStates>(
         listener: (context, state) {},
-        bloc: AppCubit()..getAllVehicles(),
         builder: (context, state) {
           AllVehicleModel vehicle = AppCubit.get(context).allVehicles;
           return vehicle != null
@@ -79,7 +78,7 @@ class AllVehiclesScreen extends StatelessWidget {
                     ],
                   ),
                 )
-              : Container();
+              : Center(child: Container(child: Text("Loading...")));
         },
       ),
     );
@@ -97,12 +96,14 @@ Widget vehicleDetails(
           Stack(
             alignment: Alignment.topRight,
             children: [
-              Image.asset(
-                "assets/images/Mask Group 2.png",
+              Image.network(
+                "${baseUrl + model.carPhoto}",
+                height: 20.h,
+                width: double.infinity,
               ),
               Container(
                 margin: const EdgeInsets.all(15),
-                width: 28.w,
+                width: 25.w,
                 height: 5.h,
                 decoration: BoxDecoration(
                     color: kRedColor, borderRadius: BorderRadius.circular(10)),
@@ -144,15 +145,19 @@ Widget vehicleDetails(
                     ),
                     Spacer(),
                     PopupMenuButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
                       itemBuilder: (context) {
                         return [
                           PopupMenuItem(
                             value: 'edit',
                             child: Text('Edit'),
+                            onTap: () {},
                           ),
                           PopupMenuItem(
                             value: 'delete',
                             child: Text('Delete'),
+                            onTap: () {},
                           )
                         ];
                       },
@@ -177,7 +182,7 @@ Widget vehicleDetails(
                         width: 16.w,
                       ),
                       Text(
-                        model.status,
+                        model.user.name,
                         style: TextStyle(
                             color: kGreyColor,
                             fontSize: 17,
@@ -199,7 +204,7 @@ Widget vehicleDetails(
                       width: 18.w,
                     ),
                     Text(
-                      model.locations[0].location,
+                      model.locations.first.location,
                       style: TextStyle(
                           color: kGreyColor,
                           fontSize: 17,
@@ -222,7 +227,8 @@ Widget vehicleDetails(
                         width: 10.w,
                       ),
                       Text(
-                        model.insuranceDateEnd.toString(),
+                        DateFormat("yyyy-MM-dd")
+                            .format(model.insuranceDateStart),
                         style: TextStyle(
                             color: kGreyColor,
                             fontSize: 15,

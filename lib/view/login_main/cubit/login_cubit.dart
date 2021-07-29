@@ -15,9 +15,8 @@ class AppLoginCubit extends Cubit<AppLoginStates> {
   void userLogin(String phone, String password) {
     emit(LoginLoadingState());
     FirebaseMessaging.instance.getToken().then((value) {
-      print(value);
       DioHelper.postData(
-              url: LOGIN,
+              url: "login",
               data: {"phone": phone, "password": password, "fb_token": value})
           .then((value) async {
         loginModel = LoginModel.fromJson(value.data);

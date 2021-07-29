@@ -47,6 +47,9 @@ dependencies:
   firebase_core: "^1.4.0"
   get_storage: ^2.0.3
   expansion_tile_card:
+  intl:
+  table_calendar:
+  google_maps_flutter:
 
 
 

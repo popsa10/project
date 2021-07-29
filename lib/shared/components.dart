@@ -409,3 +409,25 @@ Future<bool> showToast({@required String text, Color color}) =>
         backgroundColor: color,
         textColor: Colors.white,
         fontSize: 16.0);
+
+Widget custom_row({@required String title, @required String val}) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      Expanded(
+        flex: 1,
+        child: Text(
+          title,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+      ),
+      Expanded(
+        flex: 1,
+        child: Text(
+          val,
+          style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+        ),
+      )
+    ],
+  );
+}

@@ -1,61 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:project/model/vehicle/all_maintenance-model.dart';
 import 'package:project/shared/components.dart';
+import 'package:project/shared/cubit/app_cubit.dart';
+import 'package:project/shared/cubit/app_states.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../constants.dart';
 import 'create_record.dart';
 
-class MaintainanceScreen extends StatelessWidget {
-  const MaintainanceScreen({Key key}) : super(key: key);
+class MaintenanceScreen extends StatelessWidget {
+  const MaintenanceScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-          child: defaultButton(
-              text: "Add New Record",
-              onPressed: () {
-                navigateTo(context, CreateRecord());
-              },
-              color: kPrimaryColor),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "This Car Has 3 Maintenance Records",
-                style: TextStyle(color: kPrimaryColor),
-              ),
-              TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Select Date Range",
-                    style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Colors.red),
-                  )),
-            ],
-          ),
-        ),
-        Expanded(
-          child: ListView.separated(
-              itemBuilder: (context, index) => buildMaintainanceRecord(),
-              separatorBuilder: (context, index) => SizedBox(
-                    height: 2.h,
-                  ),
-              itemCount: 3),
-        )
-      ],
-    );
+    return BlocConsumer<AppCubit, AppStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          AllMaintenanceModel model = AppCubit.get(context).maintenanceModel;
+          return model != null
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 30),
+                      child: defaultButton(
+                          text: "Add New Record",
+                          onPressed: () {
+                            navigateTo(context, CreateRecord());
+                          },
+                          color: kPrimaryColor),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "This Car Has ${model.maintainces.length} Maintenance Records",
+                            style: TextStyle(color: kPrimaryColor),
+                          ),
+                          TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                "Select Date Range",
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    color: Colors.red),
+                              )),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.separated(
+                          itemBuilder: (context, index) =>
+                              buildMaintainanceRecord(model.maintainces[index]),
+                          separatorBuilder: (context, index) => SizedBox(
+                                height: 2.h,
+                              ),
+                          itemCount: model.maintainces.length),
+                    )
+                  ],
+                )
+              : Center(
+                  child: CircularProgressIndicator(),
+                );
+        });
   }
 }
 
-Widget buildMaintainanceRecord() => Container(
+Widget buildMaintainanceRecord(Maintaince model) => Container(
       color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -64,21 +79,21 @@ Widget buildMaintainanceRecord() => Container(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "12-8-2020",
+              DateFormat.yMMMd().format(model.date),
               style: TextStyle(color: kGreyColor),
             ),
             SizedBox(
               height: 1.h,
             ),
             Text(
-              "mohamed ahmed",
+              model.user.name,
               style: TextStyle(color: kPrimaryColor),
             ),
             SizedBox(
               height: 1.h,
             ),
             Text(
-              "car changed oil and batter",
+              model.decription,
               style: TextStyle(color: kPrimaryColor),
             ),
           ],

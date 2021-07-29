@@ -11,6 +11,8 @@ import 'package:project/shared/cubit/app_cubit.dart';
 import 'package:project/view/layout/home_layout.dart';
 import 'package:project/view/login_main/cubit/login_cubit.dart';
 import 'package:project/view/login_main/first_screen.dart';
+import 'package:project/view/payroll/payroll_screen.dart';
+import 'package:project/view/payroll/reduction_screen.dart';
 import 'package:sizer/sizer.dart';
 
 GetStorage getStorage = GetStorage();
@@ -46,10 +48,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => AppLoginCubit(),
         ),
-        BlocProvider(
-            create: (context) => AppCubit()
-              ..getAllTasks()
-              ..getAllVehicles()),
+        BlocProvider(create: (context) => AppCubit()),
       ],
       child: MaterialApp(
         title: 'ECC Erp',
@@ -59,7 +58,8 @@ class MyApp extends StatelessWidget {
         ),
         home: Sizer(
             builder: (context, orientation, deviceType) =>
-                token == null ? IntroScreen() : HomeLayout()),
+                // token == null ? IntroScreen() : HomeLayout()
+                Payroll_Screen()),
       ),
     );
   }

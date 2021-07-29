@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:project/constants.dart';
+import 'package:project/model/vacation/all_vacation_model.dart';
 import 'package:project/shared/components.dart';
+import 'package:project/shared/cubit/app_cubit.dart';
+import 'package:project/shared/cubit/app_states.dart';
 import 'package:sizer/sizer.dart';
 
 import 'create_vacation_screen.dart';
@@ -11,31 +16,44 @@ class VocationRequestScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-          child: defaultButton(
-              text: "Create Vacation",
-              onPressed: () {
-                navigateTo(context, CreateVacationScreen());
-              },
-              color: kPrimaryColor),
-        ),
-        Expanded(
-          child: ListView.separated(
-              itemBuilder: (context, index) => buildVacationRequestCard(),
-              separatorBuilder: (context, index) => SizedBox(
-                    height: 2.h,
-                  ),
-              itemCount: 2),
-        )
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+            child: defaultButton(
+                text: "Create Vacation",
+                onPressed: () {
+                  navigateTo(context, CreateVacationScreen());
+                },
+                color: kPrimaryColor),
+          ),
+          BlocConsumer<AppCubit, AppStates>(
+              listener: (context, state) {},
+              builder: (context, state) {
+                final model = AppCubit.get(context).vacationModel;
+                return model != null
+                    ? ListView.separated(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) =>
+                            buildVacationRequestCard(
+                                model.vacations[index], context),
+                        separatorBuilder: (context, index) => SizedBox(
+                              height: 2.h,
+                            ),
+                        itemCount: model.vacations.length)
+                    : Center(
+                        child: CircularProgressIndicator(),
+                      );
+              })
+        ],
+      ),
     );
   }
 }
 
-Widget buildVacationRequestCard() => Container(
+Widget buildVacationRequestCard(Vacation model, context) => Container(
       color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.only(left: 20),
@@ -49,9 +67,9 @@ Widget buildVacationRequestCard() => Container(
                   decoration: BoxDecoration(
                       color: kPrimaryColor,
                       borderRadius: BorderRadius.circular(10)),
-                  child: const Center(
+                  child: Center(
                     child: Text(
-                      "32",
+                      model.id.toString(),
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
@@ -61,7 +79,7 @@ Widget buildVacationRequestCard() => Container(
                   width: 10,
                 ),
                 Text(
-                  "Eid Al Adha",
+                  model.name,
                   style: TextStyle(
                       color: kRedColor,
                       fontSize: 17,
@@ -84,7 +102,7 @@ Widget buildVacationRequestCard() => Container(
                     width: 5.w,
                   ),
                   Text(
-                    "20-7-2021",
+                    DateFormat("yyyy-MM-dd").format(model.startDate),
                     style: TextStyle(
                         color: kGreyColor,
                         fontSize: 17,
@@ -106,7 +124,7 @@ Widget buildVacationRequestCard() => Container(
                   width: 7.w,
                 ),
                 Text(
-                  "20-7-2021",
+                  DateFormat("yyyy-MM-dd").format(model.endDate),
                   style: TextStyle(
                       color: kGreyColor,
                       fontSize: 17,
@@ -129,7 +147,7 @@ Widget buildVacationRequestCard() => Container(
                     width: 8.w,
                   ),
                   Text(
-                    "doctor visit",
+                    model.reason,
                     style: TextStyle(
                         color: kGreyColor,
                         fontSize: 15,
@@ -151,7 +169,11 @@ Widget buildVacationRequestCard() => Container(
                   width: 12.w,
                 ),
                 Text(
-                  "Approved",
+                  model.status == 2
+                      ? "Approved"
+                      : model.status == 1
+                          ? "Pending"
+                          : "Rejected",
                   style: TextStyle(
                       color: kGreyColor,
                       fontSize: 17,
@@ -159,7 +181,10 @@ Widget buildVacationRequestCard() => Container(
                 ),
                 Spacer(),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    AppCubit.get(context)
+                        .acceptVacation(model.userId, model.id);
+                  },
                   child: Text(
                     "Accept",
                     style: TextStyle(
@@ -169,7 +194,10 @@ Widget buildVacationRequestCard() => Container(
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    AppCubit.get(context)
+                        .cancelVacation(model.userId, model.id);
+                  },
                   child: Text(
                     "Reject",
                     style: TextStyle(

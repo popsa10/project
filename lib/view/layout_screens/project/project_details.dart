@@ -19,14 +19,6 @@ class ProjectDetails extends StatelessWidget {
     Text("Invoices"),
   ];
 
-  List<Widget> screens = [
-    DetailsScreen(),
-    EmployeesScreen(),
-    VehiclesScreen(),
-    TasksScreen(),
-    InvoicesScreen()
-  ];
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -56,7 +48,17 @@ class ProjectDetails extends StatelessWidget {
               ),
               Expanded(
                   child: TabBarView(
-                children: screens,
+                children: [
+                  DetailsScreen(
+                    model: projectModel,
+                  ),
+                  EmployeesScreen(
+                    model: projectModel,
+                  ),
+                  VehiclesScreen(),
+                  TasksScreen(),
+                  InvoicesScreen()
+                ],
               ))
             ],
           ),
