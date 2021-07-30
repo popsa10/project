@@ -19,31 +19,35 @@ class AppCubit extends Cubit<AppStates> {
 
   static AppCubit get(context) => BlocProvider.of(context);
 
-  AllTasks allTasks;
-  void getAllTasks() {
-    emit(GetAllTasksLoadingState());
-    DioHelper.getData(url: ALLTASKS).then((value) {
-      allTasks = AllTasks.fromJson(value.data);
-      emit(GetAllTasksSuccessState());
-    }).catchError((error) {
-      print(error.toString());
-      emit(GetAllTasksErrorState());
-    });
-  }
+  // AllTasks allTasks;
+  // void getAllTasks() {
+  //   emit(GetAllTasksLoadingState());
+  //   DioHelper.getData(url: ALLTASKS).then((value) {
+  //     allTasks = AllTasks.fromJson(value.data);
+  //     emit(GetAllTasksSuccessState());
+  //   }).catchError((error) {
+  //     print(error.toString());
+  //     emit(GetAllTasksErrorState());
+  //   });
+  // }
 
   void createNewTask(
       {String name,
       users,
       String startDate,
       String endDate,
+      int ProjectId,
       String description}) {
-    DioHelper.postData(url: ADDTASK, data: {
+    DioHelper.postData(url: "Add-Task", data: {
       "name": name,
       "users": users,
       "start_date": startDate,
       "end_date": endDate,
       "desription": description,
+      "project_id": ProjectId
     }).then((value) {
+      print(value.data);
+      getAllProjects();
       emit(CreateNewTaskSuccessState());
     }).catchError((error) {
       print(error.toString());
@@ -162,12 +166,20 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
+  void deleteVehicle(vehicleId) {
+    DioHelper.getData(url: "Delete-Vehicles/${vehicleId}").then((value) {
+      print(value.toString());
+      getAllVehicles();
+    }).catchError((error) {
+      print(error.toString());
+    });
+  }
+
   AllProjectModel allProject;
   void getAllProjects() {
     emit(GetAllProjectLoadingState());
     DioHelper.getData(url: "All-Project").then((value) {
       allProject = AllProjectModel.fromJson(value.data);
-      print(allProject.msg);
       emit(GetAllProjectSuccessState());
     }).catchError((error) {
       print(error.toString());
@@ -176,9 +188,9 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   AllMaintenanceModel maintenanceModel;
-  void getAllMaintenance() {
+  void getAllMaintenance(vehicleId, userId) {
     emit(GetAllMaintenanceLoadingState());
-    DioHelper.getData(url: "all-Maintaincess/1/1").then((value) {
+    DioHelper.getData(url: "all-Maintaincess/$vehicleId/$userId").then((value) {
       maintenanceModel = AllMaintenanceModel.fromJson(value.data);
       emit(GetAllMaintenanceSuccessState());
     }).catchError((error) {
@@ -187,13 +199,22 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
+  void deleteTask(taskId) {
+    DioHelper.getData(url: "Delete-Task/${taskId}").then((value) {
+      print(value.data);
+      getAllProjects();
+    }).catchError((error) {
+      print(error.toString());
+    });
+  }
+
   AddMaintenanceModel addMaintenanceModel;
-  void addMaintenance(
+  void addMaintenance({
     description,
     userId,
     vehicleId,
     date,
-  ) {
+  }) {
     DioHelper.postData(url: "add-Maintaincess", data: {
       "decription": description,
       "user_id": userId,
@@ -201,7 +222,7 @@ class AppCubit extends Cubit<AppStates> {
       "date": date,
     }).then((value) {
       addMaintenanceModel = AddMaintenanceModel.fromJson(value.data);
-      getAllMaintenance();
+      getAllMaintenance(vehicleId, userId);
       emit(AddMaintenanceSuccessState(addMaintenanceModel));
     }).catchError((error) {
       print(error.toString());
@@ -222,7 +243,7 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   PaidVacationModel paidVacationModel;
-  void getAllPaidVacation() {
+  void getPaidVacation() {
     emit(GetPaidVacationLoadingState());
     DioHelper.getData(url: "Paid-Vacation").then((value) {
       paidVacationModel = PaidVacationModel.fromJson(value.data);

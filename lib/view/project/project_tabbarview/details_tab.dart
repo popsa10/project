@@ -65,7 +65,7 @@ class DetailsScreen extends StatelessWidget {
                         color: kRedColor,
                         borderRadius: BorderRadius.circular(10)),
                     child: Center(
-                        child: defaultText(text: "Design", fontSize: 15)),
+                        child: defaultText(text: model.type, fontSize: 15)),
                   ),
                 ],
               ),
@@ -80,9 +80,9 @@ class DetailsScreen extends StatelessWidget {
                         "Invoice Number", model.invoicesNo.toString()),
                     buildRowForDetails("Project Type", model.type),
                     buildRowForDetails("Start Date",
-                        DateFormat("y-m-d").format(model.endDate)),
-                    buildRowForDetails(
-                        "End Date", DateFormat("y-m-d").format(model.endDate)),
+                        DateFormat("yyyy-MM-dd").format(model.endDate)),
+                    buildRowForDetails("End Date",
+                        DateFormat("yyyy-MM-dd").format(model.endDate)),
                     buildRowForDetails("Location", model.location.location),
                     buildRowForDetails(
                         "Task Creator", model.taskCreator.first.name),

@@ -8,11 +8,11 @@ class Payroll_Sheet_1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      appBar: mycustomAppbar(
+      appBar: myCustomAppBar(
           title: 'Mohamed Ahmed\n Salary',
           context: context,
-          canpop: true,
-          havebell: true,
+          canPop: true,
+          haveBell: true,
           haveNotf: true),
       body: SingleChildScrollView(
         child: Column(

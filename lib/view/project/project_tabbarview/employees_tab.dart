@@ -36,7 +36,7 @@ class EmployeesScreen extends StatelessWidget {
               separatorBuilder: (context, index) => SizedBox(
                     height: 2.h,
                   ),
-              itemCount: model.taskCreator.length),
+              itemCount: model.employees.length),
         )
       ],
     );

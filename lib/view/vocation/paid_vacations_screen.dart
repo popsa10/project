@@ -1,62 +1,62 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:project/constants.dart';
-import 'package:project/model/vacation/all_vacation_model.dart';
+import 'package:project/model/vacation/paid_vacation_model.dart';
 import 'package:project/shared/components.dart';
 import 'package:project/shared/cubit/app_cubit.dart';
 import 'package:project/shared/cubit/app_states.dart';
 import 'package:sizer/sizer.dart';
-
+import '../../../constants.dart';
 import 'create_vacation_screen.dart';
 
-class VocationRequestScreen extends StatelessWidget {
-  const VocationRequestScreen({Key key}) : super(key: key);
-
+class PaidVocationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            child: defaultButton(
-                text: "Create Vacation",
-                onPressed: () {
-                  navigateTo(context, CreateVacationScreen());
-                },
-                color: kPrimaryColor),
-          ),
-          BlocConsumer<AppCubit, AppStates>(
-              listener: (context, state) {},
-              builder: (context, state) {
-                final model = AppCubit.get(context).vacationModel;
-                return model != null
-                    ? ListView.separated(
+    return BlocConsumer<AppCubit, AppStates>(
+      listener: (context, state) {},
+      bloc: AppCubit.get(context)..getPaidVacation(),
+      builder: (context, state) {
+        final paidVacation = AppCubit.get(context).paidVacationModel;
+        return paidVacation != null
+            ? SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 10),
+                      child: defaultButton(
+                          text: "Create Vacation",
+                          onPressed: () {
+                            navigateTo(context, CreateVacationScreen());
+                          },
+                          color: kPrimaryColor),
+                    ),
+                    ListView.separated(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) =>
-                            buildVacationRequestCard(
-                                model.vacations[index], context),
+                            buildVacationCard(paidVacation.vacations[index]),
                         separatorBuilder: (context, index) => SizedBox(
                               height: 2.h,
                             ),
-                        itemCount: model.vacations.length)
-                    : Center(
-                        child: CircularProgressIndicator(),
-                      );
-              })
-        ],
-      ),
+                        itemCount: paidVacation.vacations.length)
+                  ],
+                ),
+              )
+            : Center(
+                child: CircularProgressIndicator(),
+              );
+      },
     );
   }
 }
 
-Widget buildVacationRequestCard(Vacation model, context) => Container(
+Widget buildVacationCard(Vacation model) => Container(
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.only(left: 20),
+        padding: const EdgeInsets.only(left: 20, bottom: 10),
         child: Column(
           children: [
             Row(
@@ -85,6 +85,20 @@ Widget buildVacationRequestCard(Vacation model, context) => Container(
                       fontSize: 17,
                       fontWeight: FontWeight.bold),
                 ),
+                Spacer(),
+                Container(
+                  width: 20.w,
+                  color: kGreenColor,
+                  child: Center(
+                    child: Text(
+                      model.type,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                )
               ],
             ),
             Padding(
@@ -99,7 +113,7 @@ Widget buildVacationRequestCard(Vacation model, context) => Container(
                         fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    width: 5.w,
+                    width: 16.w,
                   ),
                   Text(
                     DateFormat("yyyy-MM-dd").format(model.startDate),
@@ -121,7 +135,7 @@ Widget buildVacationRequestCard(Vacation model, context) => Container(
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  width: 7.w,
+                  width: 18.w,
                 ),
                 Text(
                   DateFormat("yyyy-MM-dd").format(model.endDate),
@@ -133,21 +147,21 @@ Widget buildVacationRequestCard(Vacation model, context) => Container(
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: Row(
                 children: [
                   Text(
-                    "Reason",
+                    "Assigned To",
                     style: TextStyle(
                         color: kTitleColor,
                         fontSize: 17,
                         fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    width: 8.w,
+                    width: 10.w,
                   ),
                   Text(
-                    model.reason,
+                    model.employee.name,
                     style: TextStyle(
                         color: kGreyColor,
                         fontSize: 15,
@@ -159,53 +173,22 @@ Widget buildVacationRequestCard(Vacation model, context) => Container(
             Row(
               children: [
                 Text(
-                  "Status",
+                  "Submitted By",
                   style: TextStyle(
                       color: kTitleColor,
                       fontSize: 15,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  width: 12.w,
+                  width: 10.w,
                 ),
                 Text(
-                  model.status == 2
-                      ? "Approved"
-                      : model.status == 1
-                          ? "Pending"
-                          : "Rejected",
+                  model.submituser.name,
                   style: TextStyle(
                       color: kGreyColor,
-                      fontSize: 17,
+                      fontSize: 15,
                       fontWeight: FontWeight.normal),
                 ),
-                Spacer(),
-                TextButton(
-                  onPressed: () {
-                    AppCubit.get(context)
-                        .acceptVacation(model.userId, model.id);
-                  },
-                  child: Text(
-                    "Accept",
-                    style: TextStyle(
-                        fontSize: 12,
-                        decoration: TextDecoration.underline,
-                        color: kGreenColor),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    AppCubit.get(context)
-                        .cancelVacation(model.userId, model.id);
-                  },
-                  child: Text(
-                    "Reject",
-                    style: TextStyle(
-                        fontSize: 12,
-                        decoration: TextDecoration.underline,
-                        color: kRedColor),
-                  ),
-                )
               ],
             ),
           ],

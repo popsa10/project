@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/elusive_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/constants.dart';
+import 'package:project/view/Menu/MenuHome.dart';
 import 'package:project/view/notifications/all_notification_screen.dart';
-import 'package:project/view/vehicle/all_vehicles_screen.dart';
 import 'package:sizer/sizer.dart';
 
 Widget defaultButton(
@@ -122,17 +122,20 @@ Widget defaultText(
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool search;
-  bool haveBell;
-  bool haveNotf;
+  final bool haveBell;
+  final bool haveNotf;
+  final bool canPop;
+  final TextEditingController controller;
   CustomAppBar(
       {@required this.title,
       this.search = false,
       this.haveBell = true,
-      this.haveNotf = true});
+      this.canPop = true,
+      this.haveNotf = true,
+      this.controller});
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController controller = TextEditingController();
     return Container(
       decoration: const BoxDecoration(
           color: kPrimaryColor,
@@ -147,7 +150,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             centerTitle: true,
             leading: GestureDetector(
                 onTap: () {
-                  Navigator.pop(context);
+                  if (canPop) Navigator.pop(context);
                 },
                 child: Image.asset("assets/images/Group 1558.png")),
             title: Text(
@@ -188,7 +191,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   "assets/images/Mask Group 31.png",
                 ),
                 onPressed: () {
-                  navigateTo(context, AllVehiclesScreen());
+                  navigateTo(context, MenuScreen());
                 },
               ),
             ],
@@ -266,11 +269,11 @@ Widget customDropdownMenu(
           )),
     );
 
-PreferredSizeWidget mycustomAppbar(
-    {bool canpop = false,
+PreferredSizeWidget myCustomAppBar(
+    {bool canPop = false,
     @required BuildContext context,
     double toolbarHeight = 100.0,
-    bool havebell = true,
+    bool haveBell = true,
     bool search = false,
     TextEditingController controller,
     bool haveNotf = false,
@@ -296,7 +299,7 @@ PreferredSizeWidget mycustomAppbar(
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                canpop
+                canPop
                     ? GestureDetector(
                         onTap: () {
                           Navigator.pop(context);
@@ -313,7 +316,7 @@ PreferredSizeWidget mycustomAppbar(
                 ),
                 Row(
                   children: [
-                    if (havebell)
+                    if (haveBell)
                       Container(
                         height: 30,
                         width: 30,
@@ -343,7 +346,9 @@ PreferredSizeWidget mycustomAppbar(
                         //color: Colors.indigo,
                       ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        navigateTo(context, MenuScreen());
+                      },
                       child: Image.asset(
                         "assets/images/Mask Group 31.png",
                         height: 50,
@@ -361,7 +366,7 @@ PreferredSizeWidget mycustomAppbar(
                     child: SizedBox(
                       height: 6.5.h,
                       child: customTextFormField(
-                          controller: controller ?? TextEditingController(),
+                          controller: controller,
                           hintText: "Search",
                           suffix: Padding(
                             padding: const EdgeInsets.only(right: 0),
@@ -403,9 +408,9 @@ PreferredSizeWidget mycustomAppbar(
 Future<bool> showToast({@required String text, Color color}) =>
     Fluttertoast.showToast(
         msg: text,
-        toastLength: Toast.LENGTH_LONG,
+        toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 5,
+        timeInSecForIosWeb: 1,
         backgroundColor: color,
         textColor: Colors.white,
         fontSize: 16.0);

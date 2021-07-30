@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:project/shared/components.dart';
-import 'package:project/view/layout_screens/vocation/paid_vacations_screen.dart';
-import 'package:project/view/layout_screens/vocation/vacation_request_screen.dart';
+import 'package:project/view/vocation/paid_vacations_screen.dart';
+import 'package:project/view/vocation/vacation_request_screen.dart';
 import '../../../constants.dart';
 
 class VacationsScreen extends StatelessWidget {
-  VacationsScreen({Key key}) : super(key: key);
-  List<Widget> screens = [VocationRequestScreen(), PaidVocationScreen()];
+  final searchController = TextEditingController();
   List<Widget> tabs = [
     Text("Vocation Request"),
     Text("Paid Vocations"),
@@ -17,6 +16,10 @@ class VacationsScreen extends StatelessWidget {
         appBar: CustomAppBar(
           title: "Vocations",
           search: true,
+          haveBell: true,
+          haveNotf: true,
+          canPop: false,
+          controller: searchController,
         ),
         body: DefaultTabController(
           length: tabs.length,
@@ -41,7 +44,7 @@ class VacationsScreen extends StatelessWidget {
               ),
               Expanded(
                   child: TabBarView(
-                children: screens,
+                children: [VocationRequestScreen(), PaidVocationScreen()],
               ))
             ],
           ),

@@ -9,11 +9,11 @@ class Locations_Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mycustomAppbar(
+      appBar: myCustomAppBar(
           context: context,
           title: 'Locations',
-          canpop: true,
-          havebell: true,
+          canPop: true,
+          haveBell: true,
           haveNotf: true,
           search: true,
           toolbarHeight: 140),

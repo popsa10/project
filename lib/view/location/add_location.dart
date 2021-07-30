@@ -7,13 +7,13 @@ class Add_Location extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mycustomAppbar(
+      appBar: myCustomAppBar(
         context: context,
         title: 'Locations',
         search: false,
         haveNotf: true,
-        havebell: true,
-        canpop: true,
+        haveBell: true,
+        canPop: true,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),

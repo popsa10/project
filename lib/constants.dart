@@ -10,8 +10,8 @@ const Color kGreyColor = Color(0xff707070);
 const Color kSecondaryColor = Color(0xffFFFFFF);
 const Color kScaffoldColor = Color(0xffF0F0F2);
 
-String token = "";
-String userId = "";
-String companyId = "";
+String token;
+int userId;
+int companyId;
 
 const String baseUrl = "https://active4web.com/ECC/";

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:project/model/vehicle/all_maintenance-model.dart';
+import 'package:project/model/vehicle/vehicle_model.dart';
 import 'package:project/shared/components.dart';
 import 'package:project/shared/cubit/app_cubit.dart';
 import 'package:project/shared/cubit/app_states.dart';
@@ -10,12 +11,14 @@ import '../../constants.dart';
 import 'create_record.dart';
 
 class MaintenanceScreen extends StatelessWidget {
-  const MaintenanceScreen({Key key}) : super(key: key);
+  Vehicle model;
+  MaintenanceScreen({Key key, this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
         listener: (context, state) {},
+        bloc: AppCubit.get(context)..getAllMaintenance(model.id, model.userId),
         builder: (context, state) {
           AllMaintenanceModel model = AppCubit.get(context).maintenanceModel;
           return model != null
@@ -28,7 +31,11 @@ class MaintenanceScreen extends StatelessWidget {
                       child: defaultButton(
                           text: "Add New Record",
                           onPressed: () {
-                            navigateTo(context, CreateRecord());
+                            navigateTo(
+                                context,
+                                CreateRecord(
+                                  model: this.model,
+                                ));
                           },
                           color: kPrimaryColor),
                     ),

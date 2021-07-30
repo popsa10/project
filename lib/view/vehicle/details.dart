@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:project/model/vehicle/vehicle_model.dart';
 import 'package:project/shared/components.dart';
-import 'package:project/view/layout_screens/project/project_tabbarview/details_tab.dart';
+import 'package:project/view/project/project_tabbarview/details_tab.dart';
 import 'package:sizer/sizer.dart';
 import '../../constants.dart';
 

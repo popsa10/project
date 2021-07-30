@@ -4,7 +4,6 @@ import 'package:project/constants.dart';
 import 'package:project/shared/components.dart';
 
 class CreateVacationScreen extends StatelessWidget {
-  CreateVacationScreen({Key key}) : super(key: key);
   final vacationName = TextEditingController();
   final startDate = TextEditingController();
   final endDate = TextEditingController();

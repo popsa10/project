@@ -22,13 +22,11 @@ class LoginScreen extends StatelessWidget {
           if (state.loginModel.status) {
             showToast(text: state.loginModel.msg, color: kGreenColor)
                 .then((value) {
-              getStorage.write(
-                  "userId", state.loginModel.data.permission.userId);
               getStorage.write("companyId", state.loginModel.data.companyId);
+              getStorage.write("userId", state.loginModel.data.id);
               getStorage
                   .write("token", state.loginModel.data.apiToken)
                   .then((value) {
-                print(state.loginModel.data.apiToken);
                 navigateToAndFinish(context, HomeLayout());
               });
             });

@@ -8,12 +8,12 @@ class Reduction_Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          appBar: mycustomAppbar(
+          appBar: myCustomAppBar(
               context: context,
               title: "Reduction",
               haveNotf: false,
-              havebell: false,
-              canpop: true),
+              haveBell: false,
+              canPop: true),
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

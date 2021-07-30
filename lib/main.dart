@@ -11,8 +11,6 @@ import 'package:project/shared/cubit/app_cubit.dart';
 import 'package:project/view/layout/home_layout.dart';
 import 'package:project/view/login_main/cubit/login_cubit.dart';
 import 'package:project/view/login_main/first_screen.dart';
-import 'package:project/view/payroll/payroll_screen.dart';
-import 'package:project/view/payroll/reduction_screen.dart';
 import 'package:sizer/sizer.dart';
 
 GetStorage getStorage = GetStorage();
@@ -30,7 +28,6 @@ void main() async {
     print(event.data.toString());
     showToast(text: "onMessageOpenedApp notification", color: Colors.green);
   });
-
   Bloc.observer = MyBlocObserver();
   runApp(MyApp(
     token: token,
@@ -58,8 +55,7 @@ class MyApp extends StatelessWidget {
         ),
         home: Sizer(
             builder: (context, orientation, deviceType) =>
-                // token == null ? IntroScreen() : HomeLayout()
-                Payroll_Screen()),
+                token == null ? IntroScreen() : HomeLayout()),
       ),
     );
   }

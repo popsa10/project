@@ -47,7 +47,9 @@ class VehicleDetails extends StatelessWidget {
                   Details(
                     vehicleModel,
                   ),
-                  MaintenanceScreen()
+                  MaintenanceScreen(
+                    model: vehicleModel,
+                  )
                 ],
               ))
             ],

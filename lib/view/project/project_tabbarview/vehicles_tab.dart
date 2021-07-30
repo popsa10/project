@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:project/model/all_projects_model.dart';
 import 'package:project/model/vehicle/vehicle_model.dart';
+import 'package:project/shared/components.dart';
+import 'package:project/view/vehicle/vehicle_details.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../constants.dart';
@@ -14,16 +17,23 @@ class VehiclesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-        itemBuilder: (context, index) => buildVehiclesCard(model.vehicles),
-        separatorBuilder: (context, index) => SizedBox(
-              height: 2.h,
-            ),
-        itemCount: model.vehicles.length);
+    return model.vehicles.length > 0
+        ? ListView.separated(
+            itemBuilder: (context, index) =>
+                buildVehiclesCard(model.vehicles[index], context),
+            separatorBuilder: (context, index) => SizedBox(
+                  height: 2.h,
+                ),
+            itemCount: model.vehicles.length)
+        : Center(
+            child: Text(
+            "Please Add Vehicles",
+            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+          ));
   }
 }
 
-Widget buildVehiclesCard(model) => Container(
+Widget buildVehiclesCard(Vehicle model, context) => Container(
       color: Colors.white,
       child: Column(
         children: [
@@ -103,7 +113,8 @@ Widget buildVehiclesCard(model) => Container(
                       style: TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
                     ),
-                    Text(DateFormat("d-m-y").format(model.insuranceDateEnd),
+                    Text(
+                        DateFormat("yyyy-MM-dd").format(model.insuranceDateEnd),
                         style: TextStyle(
                             color: Colors.grey, fontWeight: FontWeight.bold)),
                   ],
@@ -118,9 +129,18 @@ Widget buildVehiclesCard(model) => Container(
                 SizedBox(
                   height: 2.h,
                 ),
-                Text(
-                  "More details",
-                  style: TextStyle(color: Color(0xff0D204C)),
+                TextButton(
+                  onPressed: () {
+                    navigateTo(
+                        context,
+                        VehicleDetails(
+                          vehicleModel: model,
+                        ));
+                  },
+                  child: Text(
+                    "More details",
+                    style: TextStyle(color: Color(0xff0D204C)),
+                  ),
                 )
               ],
             ),

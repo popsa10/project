@@ -6,11 +6,11 @@ class Create_Report extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mycustomAppbar(
+      appBar: myCustomAppBar(
           context: context,
           title: 'Add Report',
-          canpop: true,
-          havebell: true,
+          canPop: true,
+          haveBell: true,
           haveNotf: true),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),

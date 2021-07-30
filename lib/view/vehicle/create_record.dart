@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:project/constants.dart';
+import 'package:project/model/vehicle/vehicle_model.dart';
 import 'package:project/shared/components.dart';
 import 'package:project/shared/cubit/app_cubit.dart';
 import 'package:project/shared/cubit/app_states.dart';
@@ -10,7 +11,8 @@ import 'package:sizer/sizer.dart';
 import 'maintainance_screen.dart';
 
 class CreateRecord extends StatelessWidget {
-  CreateRecord({Key key}) : super(key: key);
+  Vehicle model;
+  CreateRecord({Key key, this.model}) : super(key: key);
   final date = TextEditingController();
   final description = TextEditingController();
   @override
@@ -99,8 +101,11 @@ class CreateRecord extends StatelessWidget {
                   child: defaultButton(
                       text: "Save Record",
                       onPressed: () {
-                        AppCubit.get(context)
-                            .addMaintenance(description.text, 1, 1, date.text);
+                        AppCubit.get(context).addMaintenance(
+                            description: description.text,
+                            vehicleId: model.id,
+                            userId: model.userId,
+                            date: date.text);
                       },
                       color: kPrimaryColor),
                 ),

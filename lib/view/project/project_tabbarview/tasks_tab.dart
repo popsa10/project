@@ -1,12 +1,9 @@
-import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:project/model/all_projects_model.dart';
-import 'package:project/model/all_tasks_model.dart';
 import 'package:project/shared/components.dart';
 import 'package:project/shared/cubit/app_cubit.dart';
-import 'package:project/shared/cubit/app_states.dart';
-import 'package:project/view/layout_screens/workflow/new_task_screen.dart';
+import 'package:project/view/workflow/new_task_screen.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../constants.dart';
 import '../task_detail.dart';
@@ -17,108 +14,103 @@ class TasksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppCubit, AppStates>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          AllTasks allTasks = AppCubit.get(context).allTasks;
-          return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: ConditionalBuilder(
-              condition: state is! GetAllTasksLoadingState,
-              builder: (context) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadiusDirectional.only(
+                    topStart: Radius.circular(20),
+                    topEnd: Radius.circular(20))),
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Column(
                 children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadiusDirectional.only(
-                            topStart: Radius.circular(20),
-                            topEnd: Radius.circular(20))),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CircleAvatar(
+                        minRadius: 15.w,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CircleAvatar(
-                                minRadius: 15.w,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  buildRowForChart("Completed", kGreenColor, 3),
-                                  buildRowForChart(
-                                      "In Progress", Colors.yellow, 12),
-                                  buildRowForChart("delayed", kRedColor, 5),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          Row(
-                            children: [
-                              defaultButton(
-                                  text: "Create New Task",
-                                  onPressed: () {
-                                    navigateTo(context, NewTaskScreen());
-                                  },
-                                  color: kPrimaryColor,
-                                  width: 56.w),
-                              SizedBox(
-                                width: 2.w,
-                              ),
-                              Expanded(
-                                child: defaultButton(
-                                  text: "Add Note",
-                                  onPressed: () {},
-                                ),
-                              ),
-                            ],
-                          )
+                          buildRowForChart("Completed", kGreenColor, 3),
+                          buildRowForChart("In Progress", Colors.yellow, 12),
+                          buildRowForChart("delayed", kRedColor, 5),
                         ],
                       ),
-                    ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        defaultText(
-                            text: "Project tasks",
-                            color: Colors.black,
-                            fontWeight: FontWeight.normal),
-                        defaultText(
-                            text: "${allTasks.tasks.length} quantity",
-                            color: kGreyColor,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 14),
-                      ],
-                    ),
+                  SizedBox(
+                    height: 2.h,
                   ),
-                  ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) =>
-                          buildProjectTasksCard(allTasks.tasks[index], context),
-                      separatorBuilder: (context, index) => SizedBox(
-                            height: 2.h,
-                          ),
-                      itemCount: allTasks.tasks.length),
+                  Row(
+                    children: [
+                      defaultButton(
+                          text: "Create New Task",
+                          onPressed: () {
+                            navigateTo(
+                                context,
+                                NewTaskScreen(
+                                  model: model,
+                                ));
+                          },
+                          color: kPrimaryColor,
+                          width: 56.w),
+                      SizedBox(
+                        width: 2.w,
+                      ),
+                      Expanded(
+                        child: defaultButton(
+                          text: "Add Note",
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
-              fallback: (context) => Center(child: CircularProgressIndicator()),
             ),
-          );
-        });
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                defaultText(
+                    text: "Project tasks",
+                    color: Colors.black,
+                    fontWeight: FontWeight.normal),
+                defaultText(
+                    text: "${model.task.length} quantity",
+                    color: kGreyColor,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 14),
+              ],
+            ),
+          ),
+          ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) =>
+                  buildProjectTasksCard(model.task[index], context),
+              separatorBuilder: (context, index) => SizedBox(
+                    height: 2.h,
+                  ),
+              itemCount: model.task.length),
+        ],
+      ),
+    );
   }
 }
 
 Widget buildRowForChart(String text, Color color, int number) => Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
@@ -135,13 +127,13 @@ Widget buildRowForChart(String text, Color color, int number) => Row(
             fontWeight: FontWeight.normal,
             fontSize: 16),
         SizedBox(
-          width: 2.w,
+          width: 20,
         ),
         defaultText(text: "$number", color: Colors.grey, fontSize: 16)
       ],
     );
 
-Widget buildProjectTasksCard(Tasks model, context) => Stack(
+Widget buildProjectTasksCard(Task model, context) => Stack(
       alignment: AlignmentDirectional.topStart,
       children: [
         Container(
@@ -163,7 +155,8 @@ Widget buildProjectTasksCard(Tasks model, context) => Stack(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         defaultText(
-                            text: "${model.start} - - - - - ${model.end}",
+                            text:
+                                "${DateFormat("yyyy-MM-dd").format(model.start)} - - - - - ${DateFormat("yyyy-MM-dd").format(model.end)}",
                             color: kTitleColor,
                             fontSize: 12),
                         SizedBox(
@@ -177,7 +170,7 @@ Widget buildProjectTasksCard(Tasks model, context) => Stack(
                           height: 1.h,
                         ),
                         defaultText(
-                            text: "Task Admin :${model.name}",
+                            text: "Task Admin :${model.users}",
                             color: kGreyColor,
                             fontSize: 12),
                         SizedBox(
@@ -191,8 +184,7 @@ Widget buildProjectTasksCard(Tasks model, context) => Stack(
                           height: 1.h,
                         ),
                         CircleAvatar(
-                          // backgroundImage:
-                          //     // NetworkImage(model.users[index].photo),
+                          // backgroundImage: NetworkImage(),
                           radius: 25,
                           backgroundColor: Colors.grey[300],
                         ),
@@ -208,18 +200,45 @@ Widget buildProjectTasksCard(Tasks model, context) => Stack(
                           height: 2.h,
                         ),
                         defaultText(
-                            text: model.status == 1 ? "Completed" : "",
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: kGreenColor)
+                          text: model.status == 2
+                              ? "Completed"
+                              : model.status == 1
+                                  ? "In Progress"
+                                  : "Delayed",
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: model.status == 2
+                              ? kGreenColor
+                              : model.status == 1
+                                  ? Colors.yellow
+                                  : kRedColor,
+                        )
                       ],
                     ),
                     SizedBox(
                       width: 1.w,
                     ),
-                    const Icon(
-                      Icons.more_vert,
-                      color: kGreyColor,
+                    PopupMenuButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      itemBuilder: (context) {
+                        return [
+                          PopupMenuItem(
+                            value: 'edit',
+                            child: Text('Edit'),
+                          ),
+                          PopupMenuItem(
+                            onTap: () {
+                              AppCubit.get(context).deleteTask(model.id);
+                            },
+                            value: 'delete',
+                            child: Text('Delete'),
+                          )
+                        ];
+                      },
+                      onSelected: (String value) {
+                        print('You Click on po up menu item $value');
+                      },
                     )
                   ],
                 ),
@@ -263,9 +282,13 @@ Widget buildProjectTasksCard(Tasks model, context) => Stack(
         ),
         Container(
           width: 3.w,
-          height: 9.h,
-          decoration: const BoxDecoration(
-              color: Colors.red,
+          height: 12.h,
+          decoration: BoxDecoration(
+              color: model.status == 2
+                  ? kGreenColor
+                  : model.status == 1
+                      ? Colors.yellow.shade900
+                      : kRedColor,
               borderRadius: BorderRadiusDirectional.only(
                   topStart: Radius.circular(20),
                   bottomEnd: Radius.circular(20))),

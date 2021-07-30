@@ -7,7 +7,7 @@ class SendNotificationScreen extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
-  final String imployeesValue = "";
+  String imployeesValue;
   final TextEditingController notesController = TextEditingController();
 
   @override

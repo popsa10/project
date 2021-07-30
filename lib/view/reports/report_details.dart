@@ -8,11 +8,11 @@ class Report_Details extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      appBar: mycustomAppbar(
+      appBar: myCustomAppBar(
         context: context,
         title: 'Report Details',
-        canpop: true,
-        havebell: true,
+        canPop: true,
+        haveBell: true,
         haveNotf: true,
       ),
       body: SingleChildScrollView(

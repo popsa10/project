@@ -35,12 +35,12 @@ class _Attendance1State extends State<Attendance1>
     TabController tabController =
         TabController(length: tabs.length, vsync: this);
     return Scaffold(
-      appBar: mycustomAppbar(
+      appBar: myCustomAppBar(
           context: context,
           title: 'Mohamed Ahmed\n Attendance',
           haveNotf: true,
-          canpop: true,
-          havebell: true),
+          canPop: true,
+          haveBell: true),
       body: Column(
         children: [
           TabBar(

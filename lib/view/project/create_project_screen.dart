@@ -10,7 +10,6 @@ import 'package:project/shared/cubit/app_states.dart';
 import 'package:sizer/sizer.dart';
 
 class CreateProjectScreen extends StatelessWidget {
-  CreateProjectScreen({Key key}) : super(key: key);
   final projectName = TextEditingController();
   final projectType = TextEditingController();
   final value = TextEditingController();

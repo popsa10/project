@@ -8,13 +8,13 @@ class Reports extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      appBar: mycustomAppbar(
+      appBar: myCustomAppBar(
           title: 'Reports',
           context: context,
           search: true,
           haveNotf: true,
-          havebell: true,
-          canpop: true,
+          haveBell: true,
+          canPop: true,
           toolbarHeight: 130),
       body: Column(
         children: [

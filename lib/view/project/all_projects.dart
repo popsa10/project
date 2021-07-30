@@ -20,6 +20,10 @@ class ProjectsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        canPop: false,
+        haveNotf: true,
+        controller: searchController,
+        haveBell: true,
         title: "Projects",
         search: true,
       ),
@@ -78,27 +82,24 @@ class ProjectsScreen extends StatelessWidget {
                                   navigateTo(
                                       context,
                                       ProjectDetails(
-                                        projectModel: AppCubit.get(context)
-                                            .allProject
-                                            .projects[index],
+                                        projectModel: model.projects[index],
                                       ));
                                 },
                                 child: buildProjectCard(
                                   context,
-                                  AppCubit.get(context)
-                                      .allProject
-                                      .projects[index],
+                                  model.projects[index],
                                 ),
                               ),
                           separatorBuilder: (context, index) => SizedBox(
                                 height: 2.h,
                               ),
-                          itemCount:
-                              AppCubit.get(context).allProject.projects.length),
+                          itemCount: model.projects.length),
                     ],
                   ),
                 )
-              : Container();
+              : Center(
+                  child: CircularProgressIndicator(),
+                );
         },
       ),
     );
@@ -163,7 +164,8 @@ Widget buildProjectCard(context, Project model) => Container(
                             color: kTitleColor,
                             fontSize: 13),
                         defaultText(
-                            text: DateFormat("y-m-d").format(model.startDate),
+                            text: DateFormat("yyyy-MM-dd")
+                                .format(model.startDate),
                             color: kGreyColor,
                             fontSize: 13)
                       ],
@@ -178,7 +180,8 @@ Widget buildProjectCard(context, Project model) => Container(
                             color: kTitleColor,
                             fontSize: 13),
                         defaultText(
-                            text: DateFormat("y-m-d").format(model.deadline),
+                            text:
+                                DateFormat("yyyy-MM-dd").format(model.deadline),
                             color: kGreyColor,
                             fontSize: 13)
                       ],
@@ -201,7 +204,11 @@ Widget buildProjectCard(context, Project model) => Container(
                                 : "Completed",
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
-                        color: kGreenColor)
+                        color: model.status == 0
+                            ? kRedColor
+                            : model.status == 1
+                                ? Colors.yellow.shade900
+                                : kGreenColor)
                   ],
                 )
               ],

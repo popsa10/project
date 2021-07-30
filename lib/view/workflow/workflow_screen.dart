@@ -1,8 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:project/model/all_projects_model.dart';
 import 'package:project/shared/components.dart';
-import 'package:project/view/layout_screens/workflow/workflow_projectdetails_screen.dart';
+import 'package:project/shared/cubit/app_cubit.dart';
+import 'package:project/shared/cubit/app_states.dart';
+import 'package:project/view/project/project_details.dart';
+import 'package:project/view/workflow/workflow_projectdetails_screen.dart';
 import 'package:sizer/sizer.dart';
 import '../../../constants.dart';
 
@@ -16,46 +22,65 @@ class WorkflowScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: "Workflow",
         search: true,
+        controller: searchController,
+        canPop: false,
+        haveNotf: true,
+        haveBell: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 2.h, vertical: 2.h),
-                    child: defaultText(
-                      text: "projects List (3)",
-                      color: Colors.black,
-                    ),
+      body: BlocConsumer<AppCubit, AppStates>(
+        listener: (context, state) {},
+        bloc: AppCubit.get(context)..getAllProjects(),
+        builder: (context, state) {
+          final model = AppCubit.get(context).allProject;
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 2.h, vertical: 2.h),
+                        child: defaultText(
+                          text: "projects List (${model.projects.length})",
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              margin: EdgeInsets.zero,
+                ),
+                model != null
+                    ? ListView.separated(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) =>
+                            buildProjectCard(context, model.projects[index]),
+                        separatorBuilder: (context, index) => SizedBox(
+                              height: 2,
+                            ),
+                        itemCount: model.projects.length)
+                    : Center(
+                        child: CircularProgressIndicator(),
+                      ),
+              ],
             ),
-            ListView.separated(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => buildProjectCard(context),
-                separatorBuilder: (context, index) => SizedBox(
-                      height: 2,
-                    ),
-                itemCount: 3),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
 }
 
-Widget buildProjectCard(context) => InkWell(
+Widget buildProjectCard(context, Project model) => InkWell(
       onTap: () {
-        navigateTo(context, ProjectDetails());
+        navigateTo(
+            context,
+            WorkFlowProjectDetails(
+              model: model,
+            ));
       },
       child: Container(
         decoration: const BoxDecoration(
@@ -73,7 +98,9 @@ Widget buildProjectCard(context) => InkWell(
                 Container(
                   height: 22.h,
                   width: double.infinity,
-                  color: Colors.yellow,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(baseUrl + model.photo))),
                 ),
                 Container(
                   margin: const EdgeInsets.all(15),
@@ -82,8 +109,8 @@ Widget buildProjectCard(context) => InkWell(
                   decoration: BoxDecoration(
                       color: kRedColor,
                       borderRadius: BorderRadius.circular(10)),
-                  child:
-                      Center(child: defaultText(text: "Design", fontSize: 15)),
+                  child: Center(
+                      child: defaultText(text: model.type, fontSize: 15)),
                 ),
               ],
             ),
@@ -97,7 +124,7 @@ Widget buildProjectCard(context) => InkWell(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       defaultText(
-                          text: "New building project",
+                          text: model.name,
                           color: kRedColor,
                           fontWeight: FontWeight.bold),
                       SizedBox(
@@ -110,7 +137,10 @@ Widget buildProjectCard(context) => InkWell(
                               color: kTitleColor,
                               fontSize: 13),
                           defaultText(
-                              text: "2-2-2021", color: kGreyColor, fontSize: 13)
+                              text: DateFormat("yyyy-MM-dd")
+                                  .format(model.startDate),
+                              color: kGreyColor,
+                              fontSize: 13)
                         ],
                       ),
                       SizedBox(
@@ -123,7 +153,10 @@ Widget buildProjectCard(context) => InkWell(
                               color: kTitleColor,
                               fontSize: 13),
                           defaultText(
-                              text: "2-2-2021", color: kGreyColor, fontSize: 13)
+                              text: DateFormat("yyyy-MM-dd")
+                                  .format(model.deadline),
+                              color: kGreyColor,
+                              fontSize: 13)
                         ],
                       )
                     ],

@@ -23,6 +23,7 @@ class AllNotificationScreen extends StatelessWidget {
         ),
         body: BlocConsumer<AppCubit, AppStates>(
           listener: (context, state) {},
+          bloc: AppCubit.get(context)..getAllNotification(),
           builder: (context, state) {
             final model = AppCubit.get(context).allNotificationModel;
             return model != null

@@ -21,6 +21,7 @@ class AllVehiclesScreen extends StatelessWidget {
       ),
       body: BlocConsumer<AppCubit, AppStates>(
         listener: (context, state) {},
+        bloc: AppCubit.get(context)..getAllVehicles(),
         builder: (context, state) {
           AllVehicleModel vehicle = AppCubit.get(context).allVehicles;
           return vehicle != null
@@ -78,7 +79,7 @@ class AllVehiclesScreen extends StatelessWidget {
                     ],
                   ),
                 )
-              : Center(child: Container(child: Text("Loading...")));
+              : Center(child: CircularProgressIndicator());
         },
       ),
     );
@@ -157,7 +158,9 @@ Widget vehicleDetails(
                           PopupMenuItem(
                             value: 'delete',
                             child: Text('Delete'),
-                            onTap: () {},
+                            onTap: () {
+                              AppCubit.get(context).deleteVehicle(model.id);
+                            },
                           )
                         ];
                       },

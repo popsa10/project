@@ -3,6 +3,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../../constants.dart';
 
 class AttendenceScreen extends StatelessWidget {
+  final calenderController = CalendarController();
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -39,6 +40,7 @@ class AttendenceScreen extends StatelessWidget {
                         initialCalendarFormat: CalendarFormat.week,
                         startDay: DateTime.utc(2010, 10, 16),
                         endDay: DateTime.utc(2030, 3, 14),
+                        calendarController: calenderController,
                       ),
                     ),
                     Padding(

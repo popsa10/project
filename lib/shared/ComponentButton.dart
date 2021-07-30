@@ -32,36 +32,6 @@ Widget defaultButton(
           )),
     );
 
-/////////////////// other Button ////
-// Widget defaultButton1(
-//         {double width,
-//         Color background,
-//         Function function,
-//         String text,
-//         Null Function() onPressed}) =>
-//     Container(
-//       width: width,
-//       height: 55,
-//       decoration: BoxDecoration(
-//         color: background,
-//         borderRadius: BorderRadius.circular(5),
-//         boxShadow: [
-//           BoxShadow(
-//             color: Colors.green,
-//             offset: Offset(0.0, 1.0), //(x,y)
-//             blurRadius: 2.0,
-//           ),
-//         ],
-//       ),
-//       child: TextButton(
-//           onPressed: function,
-//           child: Text(
-//             text,
-//             style: TextStyle(
-//                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
-//           )),
-//     );
-//////
 Widget defaultTextButton({Function function, String text}) =>
     TextButton(onPressed: function, child: Text(text));
 
@@ -71,8 +41,6 @@ void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
     context,
     MaterialPageRoute(builder: (context) => widget),
     (Route<dynamic> route) => false);
-
-////////////////// Statistics button   الاحصائيات
 
 Widget statisticsButton({Color background, String text, String textnumber}) =>
     Container(

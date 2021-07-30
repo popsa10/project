@@ -7,12 +7,12 @@ class Bounce_Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: mycustomAppbar(
+        appBar: myCustomAppBar(
             context: context,
             title: "Bounce",
             haveNotf: false,
-            havebell: false,
-            canpop: true),
+            haveBell: false,
+            canPop: true),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

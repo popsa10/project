@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:project/constants.dart';
+import 'package:project/model/all_projects_model.dart';
 import 'package:project/shared/components.dart';
 import 'package:project/shared/cubit/app_cubit.dart';
 import 'package:project/shared/cubit/app_states.dart';
 import 'package:sizer/sizer.dart';
 
 class NewTaskScreen extends StatelessWidget {
-  NewTaskScreen({Key key}) : super(key: key);
+  final Project model;
+  NewTaskScreen({Key key, this.model}) : super(key: key);
   final TextEditingController taskName = TextEditingController();
   final TextEditingController assignedEmployees = TextEditingController();
   final TextEditingController startDate = TextEditingController();
@@ -21,7 +24,10 @@ class NewTaskScreen extends StatelessWidget {
         child: Scaffold(
       appBar: CustomAppBar(title: "New Task", search: false),
       body: BlocConsumer<AppCubit, AppStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is CreateNewTaskSuccessState)
+            showToast(text: "Tasks Added Successfully");
+        },
         builder: (context, state) => SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
@@ -41,17 +47,37 @@ class NewTaskScreen extends StatelessWidget {
                   keyboardType: TextInputType.text,
                 ),
                 customTextField(
-                  controller: startDate,
-                  label: "Start Date",
-                  hintText: "Start Date",
-                  keyboardType: TextInputType.datetime,
-                ),
+                    controller: startDate,
+                    label: "Start Date",
+                    hintText: "Start Date",
+                    keyboardType: TextInputType.datetime,
+                    suffixFunction: () {
+                      showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2050))
+                          .then((value) {
+                        startDate.text = DateFormat("yyyy-MM-dd").format(value);
+                      });
+                    },
+                    suffix: Icons.calendar_today),
                 customTextField(
-                  controller: endDate,
-                  label: "End Date",
-                  hintText: "End Date",
-                  keyboardType: TextInputType.datetime,
-                ),
+                    controller: endDate,
+                    label: "End Date",
+                    hintText: "End Date",
+                    keyboardType: TextInputType.datetime,
+                    suffixFunction: () {
+                      showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2050))
+                          .then((value) {
+                        endDate.text = DateFormat("yyyy-MM-dd").format(value);
+                      });
+                    },
+                    suffix: Icons.calendar_today),
                 customTextField(
                     controller: description,
                     label: "Description",
@@ -67,6 +93,7 @@ class NewTaskScreen extends StatelessWidget {
                       AppCubit.get(context).createNewTask(
                           name: taskName.text,
                           users: assignedEmployees.text,
+                          ProjectId: model.id,
                           startDate: startDate.text,
                           endDate: endDate.text,
                           description: description.text);

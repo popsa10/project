@@ -4,13 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:project/model/login_model.dart';
 import 'package:project/networks/remote/dio_helper.dart';
-import 'package:project/networks/remote/end_points.dart';
 import 'login_states.dart';
 
 class AppLoginCubit extends Cubit<AppLoginStates> {
   AppLoginCubit() : super(InitialLoginState());
   static AppLoginCubit get(context) => BlocProvider.of(context);
-  final getStorage = GetStorage();
   LoginModel loginModel;
   void userLogin(String phone, String password) {
     emit(LoginLoadingState());
@@ -18,7 +16,7 @@ class AppLoginCubit extends Cubit<AppLoginStates> {
       DioHelper.postData(
               url: "login",
               data: {"phone": phone, "password": password, "fb_token": value})
-          .then((value) async {
+          .then((value) {
         loginModel = LoginModel.fromJson(value.data);
         emit(LoginSuccessState(loginModel));
       }).catchError((error) {
