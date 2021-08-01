@@ -69,7 +69,7 @@ Widget buildNotificationCard(context, Notifications model) => Container(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              DateFormat("d-m-y").format(model.createdAt),
+              DateFormat("yyyy-MM-dd").format(model.createdAt),
               style: Theme.of(context)
                   .textTheme
                   .caption

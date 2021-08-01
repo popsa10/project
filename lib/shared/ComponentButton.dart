@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttericon/elusive_icons.dart';
 
 import '../constants.dart';
 
-Widget defaultButton(
-        {double width,
-        Color background,
-        Function function,
-        String text,
-        Function onPressed}) =>
+Widget defaultButton({
+  double width,
+  Color background,
+  Function function,
+  String text,
+  Null Function() onPressed,
+}) =>
     Container(
       width: width,
       height: 55,
@@ -32,6 +34,36 @@ Widget defaultButton(
           )),
     );
 
+/////////////////// other Button ////
+// Widget defaultButton1(
+//         {double width,
+//         Color background,
+//         Function function,
+//         String text,
+//         Null Function() onPressed}) =>
+//     Container(
+//       width: width,
+//       height: 55,
+//       decoration: BoxDecoration(
+//         color: background,
+//         borderRadius: BorderRadius.circular(5),
+//         boxShadow: [
+//           BoxShadow(
+//             color: Colors.green,
+//             offset: Offset(0.0, 1.0), //(x,y)
+//             blurRadius: 2.0,
+//           ),
+//         ],
+//       ),
+//       child: TextButton(
+//           onPressed: function,
+//           child: Text(
+//             text,
+//             style: TextStyle(
+//                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+//           )),
+//     );
+//////
 Widget defaultTextButton({Function function, String text}) =>
     TextButton(onPressed: function, child: Text(text));
 
@@ -41,6 +73,8 @@ void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
     context,
     MaterialPageRoute(builder: (context) => widget),
     (Route<dynamic> route) => false);
+
+////////////////// Statistics button   الاحصائيات
 
 Widget statisticsButton({Color background, String text, String textnumber}) =>
     Container(
@@ -907,4 +941,191 @@ class CustomAppBar3 extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => Size.fromHeight(search == true ? 120 : 60);
+}
+
+Widget customTextField({
+  @required TextEditingController controller,
+  TextInputType keyboardType,
+  @required String label,
+  @required String hintText,
+  int maxLines = 1,
+  IconData suffix,
+  Function suffixFunction,
+  bool showLabel = true,
+}) =>
+    Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: TextField(
+          controller: controller,
+          keyboardType: keyboardType,
+          maxLines: maxLines,
+          decoration: InputDecoration(
+            floatingLabelBehavior: showLabel
+                ? FloatingLabelBehavior.always
+                : FloatingLabelBehavior.never,
+            suffixIcon: InkWell(onTap: suffixFunction, child: Icon(suffix)),
+            hintText: hintText,
+            hintStyle:
+                const TextStyle(color: kGreyColor, fontWeight: FontWeight.bold),
+            labelText: label,
+            labelStyle: const TextStyle(
+                color: kPrimaryColor, fontWeight: FontWeight.bold),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(10)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          )),
+    );
+
+PreferredSizeWidget mycustomAppbar(
+    {bool canpop = false,
+    BuildContext context,
+    double toolbarHeight = 100.0,
+    bool havebell = true,
+    bool search = false,
+    TextEditingController controller,
+    bool haveNotf = false,
+    String title}) {
+  return AppBar(
+    elevation: 0,
+    toolbarHeight: toolbarHeight,
+    automaticallyImplyLeading: false,
+    backgroundColor: Colors.transparent,
+    flexibleSpace: Container(
+      decoration: const BoxDecoration(
+          color: kPrimaryColor,
+          borderRadius: BorderRadiusDirectional.only(
+              bottomStart: Radius.circular(15),
+              bottomEnd: Radius.circular(15))),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 22,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                canpop
+                    ? GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Image.asset("assets/images/Group 1558.png"))
+                    : SizedBox(),
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                ),
+                Row(
+                  children: [
+                    if (havebell)
+                      Container(
+                        height: 30,
+                        width: 30,
+                        child: Center(
+                          child: Stack(
+                            children: [
+                              Icon(
+                                Elusive.bell,
+                                size: 30,
+                                color: Colors.white,
+                              ),
+                              if (haveNotf)
+                                Align(
+                                  alignment: Alignment.topRight,
+                                  child: Container(
+                                    height: 10,
+                                    width: 10,
+                                    decoration: new BoxDecoration(
+                                      color: Colors.orange,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                )
+                            ],
+                          ),
+                        ),
+                        //color: Colors.indigo,
+                      ),
+                    Image.asset(
+                      "assets/images/Mask Group 31.png",
+                      height: 50,
+                      width: 50,
+                    )
+                  ],
+                )
+              ],
+            ),
+            if (search == true)
+              Row(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 6.5,
+                      child: defaultFormField(
+                          controller: controller ?? TextEditingController(),
+                          hintText: "Search",
+                          suffix: Padding(
+                            padding: const EdgeInsets.only(right: 0),
+                            child: Container(
+                              height: 2,
+                              width: 2,
+                              decoration: BoxDecoration(
+                                  color: kPrimaryColor,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: const Icon(
+                                Icons.search,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          validate: () {},
+                          type: TextInputType.text),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 1,
+                  ),
+                  Container(
+                      height: 6.5,
+                      width: 13,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image:
+                                  AssetImage("assets/images/Group 1890.png")))),
+                ],
+              ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget customrow({String title, String val}) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      Expanded(
+        flex: 1,
+        child: Text(
+          title,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+      ),
+      Expanded(
+        flex: 1,
+        child: Text(
+          val,
+          style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+        ),
+      )
+    ],
+  );
 }

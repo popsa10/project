@@ -1,8 +1,10 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project/model/location/all_location_model.dart';
 import 'package:project/model/vehicle/add_maintenance_model.dart';
 import 'package:project/model/all_employees.dart';
 import 'package:project/model/all_projects_model.dart';
-import 'package:project/model/all_tasks_model.dart';
 import 'package:project/model/notifications/all_notifications_model.dart';
 import 'package:project/model/vacation/all_vacation_model.dart';
 import 'package:project/model/vacation/paid_vacation_model.dart';
@@ -11,6 +13,11 @@ import 'package:project/model/vehicle/vehicle_model.dart';
 import 'package:project/networks/remote/dio_helper.dart';
 import 'package:project/networks/remote/end_points.dart';
 import 'package:project/shared/cubit/app_states.dart';
+import 'package:project/view/attendence/attendence_screen.dart';
+import 'package:project/view/login_main/home_screen_manger.dart';
+import 'package:project/view/project/all_projects.dart';
+import 'package:project/view/vocation/vacations.dart';
+import 'package:project/view/workflow/workflow_screen.dart';
 
 import '../../constants.dart';
 
@@ -30,6 +37,20 @@ class AppCubit extends Cubit<AppStates> {
   //     emit(GetAllTasksErrorState());
   //   });
   // }
+
+  int currentIndex = 2;
+  void changeNavBar(int value) {
+    currentIndex = value;
+    emit(ChangeNavBarState());
+  }
+
+  List<Widget> screens = [
+    WorkflowScreen(),
+    AttendenceScreen(),
+    HomeScreen(),
+    ProjectsScreen(),
+    VacationsScreen()
+  ];
 
   void createNewTask(
       {String name,
@@ -55,92 +76,98 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  void createNewProject({
-    String name,
-    String type,
-    String startDate,
-    String endDate,
-    String deadline,
-    String locationId,
-    String schedualLink,
-    String contractLink,
-    String taskCreator,
-    String employees,
-    String vehicles,
-    String notes,
-    String photo,
-    String projectId,
-  }) {
-    DioHelper.postData(url: ADDPROJECT, data: {
+  Future<void> addProject({
+    @required name,
+    @required type,
+    @required start_date,
+    @required end_date,
+    @required deadline,
+    @required location_id,
+    @required schedual_link,
+    @required contract_link,
+    @required task_creator,
+    @required employees,
+    @required vehicles,
+    @required photo,
+    @required notes,
+    @required value,
+    @required invoices_no,
+  }) async {
+    FormData formData = FormData.fromMap({
       "name": name,
       "type": type,
-      "start_date": startDate,
-      "end_date": endDate,
+      "start_date": start_date,
+      "end_date": end_date,
       "deadline": deadline,
-      "location_id": locationId,
-      "schedual_link": schedualLink,
-      "contract_link": contractLink,
-      "task_creator": taskCreator,
+      "location_id": location_id,
+      "schedual_link": schedual_link,
+      "contract_link": contract_link,
+      "task_creator": task_creator,
       "employees": employees,
+      "user_id": userId,
       "vehicles": vehicles,
       "notes": notes,
       "photo": photo,
-      "project_id": projectId,
-    }).then((value) {
-      emit(CreateNewProjectSuccessState());
-    }).catchError((error) {
-      emit(CreateNewProjectErrorState());
+      "value": value,
+      "invoices_no": invoices_no,
     });
-  }
-
-  AllEmployees allEmployees;
-  void getAllEmployees() {
-    emit(GetAllEmployeesLoadingState());
-    DioHelper.postData(
-        url: "All-Emploes",
-        token: token,
-        data: {"user_id": userId, "company_id": companyId}).then((value) async {
-      allEmployees = await AllEmployees.fromJson(value.data);
-      print(allEmployees.data.status);
-      emit(GetAllEmployeesSuccessState());
+    DioHelper.postData(url: "Add-Project", token: token, data: formData)
+        .then((value) {
+      print(value.data);
+      getAllProjects();
     }).catchError((error) {
       print(error.toString());
-      emit(GetAllEmployeesErrorState());
     });
   }
 
   AllVehicleModel allVehicles;
-  void getAllVehicles() {
+  getAllVehicles() {
     emit(GetAllVehiclesLoadingState());
-    DioHelper.getData(
+    return DioHelper.getData(
       url: "All-Vehicles",
     ).then((value) {
       allVehicles = AllVehicleModel.fromJson(value.data);
+      print(value.data);
       emit(GetAllVehiclesSuccessState());
     }).catchError((error) {
       emit(GetAllVehiclesErrorState());
     });
   }
 
-  void addVehicle(
-      {name,
-      number,
-      model,
-      kilometer,
-      insuranceDateStart,
-      insuranceDateEnd,
-      licenseNumber,
-      driverLicense,
-      licenseDateEnd,
-      examinationDate,
-      userId,
-      locations,
-      notes,
-      carPhoto,
-      insurancePhoto,
-      licensePhoto,
-      status}) {
-    DioHelper.postData(url: "Add-Vehicles", data: {
+  Future<void> addVehicle(
+      {@required name,
+      @required number,
+      @required model,
+      @required kilometer,
+      @required insuranceDateStart,
+      @required insuranceDateEnd,
+      @required licenseNumber,
+      @required driverLicense,
+      @required licenseDateEnd,
+      @required examinationDate,
+      @required userId,
+      @required locations,
+      @required notes,
+      @required carPhoto,
+      @required insurancePhoto,
+      @required licensePhoto,
+      @required status}) async {
+    print("insuranceDateStart = ${insuranceDateStart}");
+    print("examinationDate = ${examinationDate}");
+    print("licenseDateEnd = ${licenseDateEnd}");
+    print("insuranceDateEnd = ${insuranceDateEnd}");
+    print("name == $name");
+    print("number == $number");
+    print("model == $model");
+    print("kilometer == $kilometer");
+    print("licenseNumber == $licenseNumber");
+    print("driverLicense == $driverLicense");
+    print("userId == $userId");
+    print("locations == $locations");
+    print("notes == $locations");
+    print("status == $status");
+
+    FormData formData = FormData.fromMap({
       "name": name,
       "number": number,
       "model": model,
@@ -154,11 +181,11 @@ class AppCubit extends Cubit<AppStates> {
       "user_id": userId,
       "locations": locations,
       "notes": notes,
-      "car_photo": baseUrl + carPhoto,
-      "insurance_photo": baseUrl + insurancePhoto,
-      "license_photo": baseUrl + licensePhoto,
       "status": status,
-    }).then((value) {
+    });
+
+    DioHelper.postData(url: "Add-Vehicles", token: token, data: formData)
+        .then((value) {
       print(value.data);
       getAllVehicles();
     }).catchError((error) {
@@ -176,7 +203,7 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   AllProjectModel allProject;
-  void getAllProjects() {
+  getAllProjects() {
     emit(GetAllProjectLoadingState());
     DioHelper.getData(url: "All-Project").then((value) {
       allProject = AllProjectModel.fromJson(value.data);
@@ -283,5 +310,44 @@ class AppCubit extends Cubit<AppStates> {
       print(error.toString());
       emit(GetAllNotificationErrorState());
     });
+  }
+
+  Future sendNote(String notes, String employee) {
+    return DioHelper.postData(
+        url: "Send-notifications",
+        data: {"notes": notes, "employee": employee}).then((value) {
+      print(value.data);
+    }).catchError((error) {
+      print(error.toString());
+    });
+  }
+
+  Future<AllEmployeesModel> getEmployees() async {
+    AllEmployeesModel allEmployees;
+    emit(GetAllEmployeesLoadingState());
+    Response response = await DioHelper.postData(
+        url: "All-Emploes",
+        token: token,
+        data: {"user_id": 1, "company_id": 1});
+    print(response.data);
+    allEmployees = AllEmployeesModel.fromJson(response.data);
+    return allEmployees;
+  }
+
+  Future<AllLocationsModel> getLocations() async {
+    AllLocationsModel allLocations;
+    emit(GetAllEmployeesLoadingState());
+
+    Response response = await DioHelper.getData(
+      url: "All-Location",
+      token: token,
+    );
+    // print("response.body");
+    // http.Response response = await http.post(Uri.parse("https://active4web.com/ECC/api/All-Emploes"),body: {"user_id": userId, "company_id": companyId},headers: {"Authorization": token ?? "",
+    //   "Content-Type": "application/json"});
+    print(response.data);
+    allLocations = AllLocationsModel.fromJson(response.data);
+    print("uuuuuuuuu${allLocations.msg}");
+    return allLocations;
   }
 }

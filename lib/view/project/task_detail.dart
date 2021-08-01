@@ -25,17 +25,15 @@ class TaskDetails extends StatelessWidget {
               ),
               line(context: context, name: "Task Name", branch: model.name),
               line(
-                  context: context,
-                  name: "Assigin Project",
-                  branch: model.name),
+                  context: context, name: "Assign Project", branch: model.name),
               line(
                   context: context,
                   name: "Start Date",
-                  branch: DateFormat("yy-MM-dd").format(model.start)),
+                  branch: DateFormat("yyyy-MM-dd").format(model.start)),
               line(
                   context: context,
                   name: "End Date",
-                  branch: DateFormat("yy-MM-dd").format(model.end)),
+                  branch: DateFormat("yyyy-MM-dd").format(model.end)),
               line(context: context, name: "Task Admin", branch: model.users),
               line(context: context, name: "Assigned to", branch: model.users),
               SizedBox(

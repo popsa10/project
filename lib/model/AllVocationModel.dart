@@ -1,19 +1,19 @@
-class AllEmployeesModel {
+class AllVacationModel {
   bool status;
   String errNum;
   String msg;
-  List<Users> users;
+  List<Vacations> vacations;
 
-  AllEmployeesModel({this.status, this.errNum, this.msg, this.users});
+  AllVacationModel({this.status, this.errNum, this.msg, this.vacations});
 
-  AllEmployeesModel.fromJson(Map<String, dynamic> json) {
+  AllVacationModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     errNum = json['errNum'];
     msg = json['msg'];
-    if (json['users'] != null) {
-      users = new List<Users>();
-      json['users'].forEach((v) {
-        users.add(new Users.fromJson(v));
+    if (json['vacations'] != null) {
+      vacations = <Vacations>[];
+      json['vacations'].forEach((v) {
+        vacations.add(new Vacations.fromJson(v));
       });
     }
   }
@@ -23,14 +23,83 @@ class AllEmployeesModel {
     data['status'] = this.status;
     data['errNum'] = this.errNum;
     data['msg'] = this.msg;
-    if (this.users != null) {
-      data['users'] = this.users.map((v) => v.toJson()).toList();
+    if (this.vacations != null) {
+      data['vacations'] = this.vacations.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Users {
+class Vacations {
+  int id;
+  String type;
+  String name;
+  String startDate;
+  String endDate;
+  Employee employee;
+  int userId;
+  String reason;
+  int status;
+  String createdAt;
+  String updatedAt;
+  Employee submituser;
+
+  Vacations(
+      {this.id,
+      this.type,
+      this.name,
+      this.startDate,
+      this.endDate,
+      this.employee,
+      this.userId,
+      this.reason,
+      this.status,
+      this.createdAt,
+      this.updatedAt,
+      this.submituser});
+
+  Vacations.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    type = json['type'];
+    name = json['name'];
+    startDate = json['start_date'];
+    endDate = json['end_date'];
+    employee = json['employee'] != null
+        ? new Employee.fromJson(json['employee'])
+        : null;
+    userId = json['user_id'];
+    reason = json['reason'];
+    status = json['status'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    submituser = json['submituser'] != null
+        ? new Employee.fromJson(json['submituser'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['type'] = this.type;
+    data['name'] = this.name;
+    data['start_date'] = this.startDate;
+    data['end_date'] = this.endDate;
+    if (this.employee != null) {
+      data['employee'] = this.employee.toJson();
+    }
+    data['user_id'] = this.userId;
+    data['reason'] = this.reason;
+    data['status'] = this.status;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    if (this.submituser != null) {
+      data['submituser'] = this.submituser.toJson();
+    }
+    return data;
+  }
+}
+
+class Employee {
   int id;
   int iqama;
   String iqamaEndDate;
@@ -40,13 +109,13 @@ class Users {
   String passportEndDate;
   String name;
   String email;
-  Null emailVerifiedAt;
+  String emailVerifiedAt;
   int phone;
   String photo;
   String type;
   int salary;
   String employeetype;
-  Null token;
+  String token;
   int companyId;
   String joiningDate;
   String contractDate;
@@ -60,9 +129,8 @@ class Users {
   String workDayes;
   String createdAt;
   String updatedAt;
-  Company company;
 
-  Users(
+  Employee(
       {this.id,
       this.iqama,
       this.iqamaEndDate,
@@ -91,10 +159,9 @@ class Users {
       this.workEnd,
       this.workDayes,
       this.createdAt,
-      this.updatedAt,
-      this.company});
+      this.updatedAt});
 
-  Users.fromJson(Map<String, dynamic> json) {
+  Employee.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     iqama = json['iqama'];
     iqamaEndDate = json['iqama_end_date'];
@@ -124,8 +191,6 @@ class Users {
     workDayes = json['work_dayes'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    company =
-        json['company'] != null ? new Company.fromJson(json['company']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -157,54 +222,6 @@ class Users {
     data['work_start'] = this.workStart;
     data['work_end'] = this.workEnd;
     data['work_dayes'] = this.workDayes;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    if (this.company != null) {
-      data['company'] = this.company.toJson();
-    }
-    return data;
-  }
-}
-
-class Company {
-  int id;
-  String name;
-  String email;
-  String photo;
-  String password;
-  String rememberToken;
-  String createdAt;
-  String updatedAt;
-
-  Company(
-      {this.id,
-      this.name,
-      this.email,
-      this.photo,
-      this.password,
-      this.rememberToken,
-      this.createdAt,
-      this.updatedAt});
-
-  Company.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    email = json['email'];
-    photo = json['photo'];
-    password = json['password'];
-    rememberToken = json['remember_token'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['photo'] = this.photo;
-    data['password'] = this.password;
-    data['remember_token'] = this.rememberToken;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     return data;

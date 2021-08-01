@@ -1,17 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:project/constants.dart';
 import 'package:project/model/all_projects_model.dart';
 import 'package:project/shared/components.dart';
 import 'package:project/shared/cubit/app_cubit.dart';
 import 'package:project/shared/cubit/app_states.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailsScreen extends StatelessWidget {
   final Project model;
-  const DetailsScreen({this.model});
+  DetailsScreen({this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -106,15 +109,18 @@ class DetailsScreen extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        final availableMaps = await MapLauncher.installedMaps;
+                        await availableMaps.first.showMarker(
+                            coords: Coords(double.parse(model.location.lat),
+                                double.parse(model.location.lang)),
+                            title: model.location.title);
+                      },
                       child: Text(
                         "view On Map",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, color: kRedColor),
                       ),
-                    ),
-                    SizedBox(
-                      height: 1.h,
                     ),
                   ],
                 ),
@@ -151,23 +157,28 @@ class DetailsScreen extends StatelessWidget {
                               fontWeight: FontWeight.normal,
                               color: kTitleColor),
                         ),
-                        Row(
-                          children: [
-                            Image.asset(
-                              "assets/images/Icon feather-eye.png",
-                              height: 2.h,
-                            ),
-                            SizedBox(
-                              width: 1.w,
-                            ),
-                            const Text(
-                              "view",
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontWeight: FontWeight.bold,
-                                  color: kRedColor),
-                            ),
-                          ],
+                        InkWell(
+                          onTap: () {
+                            launch(baseUrl + model.schedualLink);
+                          },
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                "assets/images/Icon feather-eye.png",
+                                height: 2.h,
+                              ),
+                              SizedBox(
+                                width: 1.w,
+                              ),
+                              const Text(
+                                "view",
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.bold,
+                                    color: kRedColor),
+                              ),
+                            ],
+                          ),
                         )
                       ],
                     ),
@@ -183,23 +194,28 @@ class DetailsScreen extends StatelessWidget {
                               fontWeight: FontWeight.normal,
                               color: kTitleColor),
                         ),
-                        Row(
-                          children: [
-                            Image.asset(
-                              "assets/images/Icon feather-eye.png",
-                              height: 2.h,
-                            ),
-                            SizedBox(
-                              width: 1.w,
-                            ),
-                            const Text(
-                              "view",
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontWeight: FontWeight.bold,
-                                  color: kRedColor),
-                            ),
-                          ],
+                        InkWell(
+                          onTap: () {
+                            launch(baseUrl + model.schedualLink);
+                          },
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                "assets/images/Icon feather-eye.png",
+                                height: 2.h,
+                              ),
+                              SizedBox(
+                                width: 1.w,
+                              ),
+                              const Text(
+                                "view",
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.bold,
+                                    color: kRedColor),
+                              ),
+                            ],
+                          ),
                         )
                       ],
                     ),
@@ -215,23 +231,28 @@ class DetailsScreen extends StatelessWidget {
                               fontWeight: FontWeight.normal,
                               color: kTitleColor),
                         ),
-                        Row(
-                          children: [
-                            Image.asset(
-                              "assets/images/Icon feather-eye.png",
-                              height: 2.h,
-                            ),
-                            SizedBox(
-                              width: 1.w,
-                            ),
-                            const Text(
-                              "view",
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontWeight: FontWeight.bold,
-                                  color: kRedColor),
-                            ),
-                          ],
+                        InkWell(
+                          onTap: () {
+                            launch(baseUrl + model.othersfile);
+                          },
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                "assets/images/Icon feather-eye.png",
+                                height: 2.h,
+                              ),
+                              SizedBox(
+                                width: 1.w,
+                              ),
+                              const Text(
+                                "view",
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.bold,
+                                    color: kRedColor),
+                              ),
+                            ],
+                          ),
                         )
                       ],
                     ),

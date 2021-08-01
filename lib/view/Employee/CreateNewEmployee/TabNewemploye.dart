@@ -1,41 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:project/model/AllEmployeeModel.dart';
 import 'package:project/shared/ComponentButton.dart';
-import 'package:project/view/Employee/Eng%20Nasser/Bounce_Screen.dart';
-import 'package:project/view/Employee/Eng%20Nasser/Report.dart';
+import 'package:project/view/Employee/CreateNewEmployee/permission/Permissions.dart';
 
 import '../../../constants.dart';
-import 'Details_Employes.dart';
-import 'ReportEmployee.dart';
-import 'SalaryEmployee.dart';
-import 'Tasks/Tasks.dart';
-import 'VacationsEmployee.dart';
-import 'attentanceEmploye.dart';
+import 'CreateNewEmploye.dart';
 
-class HomeTabDetails extends StatefulWidget {
-  final Users tabModel;
-
-  const HomeTabDetails({Key key, this.tabModel}) : super(key: key);
-
+class TabNewEmployee extends StatefulWidget {
   @override
-  _HomeTabDetailsState createState() => _HomeTabDetailsState();
+  _TabNewEmployeeState createState() => _TabNewEmployeeState();
 }
 
-class _HomeTabDetailsState extends State<HomeTabDetails>
+class _TabNewEmployeeState extends State<TabNewEmployee>
     with TickerProviderStateMixin {
   List<Widget> tabs = [
-    Text("Details"),
-    Text("attentence"),
-    Text("Vaction"),
-    Text("salary"),
-    Text("Tasks"),
-    Text("Report"),
-    Text("Eng Nasser"),
-    Text("Location"),
+    Text("Details          "),
+    Text("  User_Permission"),
   ];
-
   List<Widget> screens;
-
   @override
   Widget build(BuildContext context) {
     TabController tabController =
@@ -43,8 +24,7 @@ class _HomeTabDetailsState extends State<HomeTabDetails>
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.grey[200],
-        appBar: CustomAppBar(title: "Mohamed Ahmed  ", search: false),
-        //  CustomAppBarTab(title: "Mohamed Ahmed", search: false),
+        appBar: CustomAppBar(title: "New Employee", search: false),
         body: Column(
           children: [
             TabBar(
@@ -57,7 +37,8 @@ class _HomeTabDetailsState extends State<HomeTabDetails>
               indicatorColor: kRedColor,
               isScrollable: true,
               labelStyle: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-              labelPadding: EdgeInsets.only(top: 15, right: 15, bottom: 15),
+              labelPadding:
+                  EdgeInsets.only(top: 15, right: 3, left: 3, bottom: 15),
               unselectedLabelColor: kGreyColor,
             ),
             Padding(
@@ -71,18 +52,8 @@ class _HomeTabDetailsState extends State<HomeTabDetails>
                 child: TabBarView(
               controller: tabController,
               children: screens = [
-                DetailsEmployee(
-                  detailsmodel: widget.tabModel,
-                ),
-                AttentanceEmploye(),
-                VacationsScrren(),
-                SalaryScreen(
-                  salarymodel: widget.tabModel,
-                ),
-                TasksScreen(),
-                ReportEmployee(),
-                ReportsScreen(),
-                LocationScreen(),
+                CreateNewEmlpoye(),
+                PermissionsScreen(),
               ],
             ))
           ],

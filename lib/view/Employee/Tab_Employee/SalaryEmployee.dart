@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:project/model/AllEmployeeModel.dart';
 import 'package:project/shared/ComponentButton.dart';
 
+import 'SalaryDetailsEmployee.dart';
+
 class SalaryScreen extends StatelessWidget {
+  final Users salarymodel;
+
+  SalaryScreen({Key key, this.salarymodel}) : super(key: key);
   final TextEditingController taskName = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,8 +32,8 @@ class SalaryScreen extends StatelessWidget {
             separatorBuilder: (context, index) => SizedBox(
               height: 8,
             ),
-            itemBuilder: (context, index) => listView(context),
-            itemCount: 4,
+            itemBuilder: (context, index) => listView(context, salarymodel),
+            itemCount: salarymodel.id.bitLength,
           ),
         )
       ],
@@ -115,19 +122,22 @@ class SalaryScreen extends StatelessWidget {
           ],
         ),
       );
-  Widget listView(context) => Container(
+  Widget listView(context, Users model) => Container(
         height: 200,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(20)),
         child: Column(
           children: [
-            line(context: context, name: "Employee Id", branch: "23"),
+            line(context: context, name: "Employee Id", branch: "${model.id}"),
             line(
                 context: context,
                 name: "Employee Name",
-                branch: "Mohamed Ahmed"),
-            line(context: context, name: "Month", branch: "April 2021"),
-            line(context: context, name: "Salary", branch: "5000 SAR"),
+                branch: "${model.name}"),
+            line(
+                context: context,
+                name: "Month",
+                branch: "${model.contractDate}"),
+            line(context: context, name: "Salary", branch: "${model.salary}"),
             lineCash(
                 context: context,
                 name: "Status",
@@ -145,9 +155,18 @@ class SalaryScreen extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "More Details",
-                    style: TextStyle(fontSize: 16),
+                  GestureDetector(
+                    onTap: () {
+                      navigateTo(
+                          context,
+                          SalaryDetails(
+                            salaryDetailsModel: model,
+                          ));
+                    },
+                    child: Text(
+                      "More Details",
+                      style: TextStyle(fontSize: 16),
+                    ),
                   )
                 ],
               ),

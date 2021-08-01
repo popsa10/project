@@ -4,11 +4,13 @@ abstract class AppStates {}
 
 class AppInitialState extends AppStates {}
 
-class GetAllTasksLoadingState extends AppStates {}
+class ChangeNavBarState extends AppStates {}
 
-class GetAllTasksSuccessState extends AppStates {}
-
-class GetAllTasksErrorState extends AppStates {}
+// class GetAllTasksLoadingState extends AppStates {}
+//
+// class GetAllTasksSuccessState extends AppStates {}
+//
+// class GetAllTasksErrorState extends AppStates {}
 
 class CreateNewTaskSuccessState extends AppStates {}
 

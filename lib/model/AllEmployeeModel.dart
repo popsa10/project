@@ -1,17 +1,17 @@
-class AllEmployeesModel {
+class AllEmployeeModel {
   bool status;
   String errNum;
   String msg;
   List<Users> users;
 
-  AllEmployeesModel({this.status, this.errNum, this.msg, this.users});
+  AllEmployeeModel({this.status, this.errNum, this.msg, this.users});
 
-  AllEmployeesModel.fromJson(Map<String, dynamic> json) {
+  AllEmployeeModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     errNum = json['errNum'];
     msg = json['msg'];
     if (json['users'] != null) {
-      users = new List<Users>();
+      users = <Users>[];
       json['users'].forEach((v) {
         users.add(new Users.fromJson(v));
       });
@@ -40,13 +40,14 @@ class Users {
   String passportEndDate;
   String name;
   String email;
-  Null emailVerifiedAt;
+  String emailVerifiedAt;
   int phone;
   String photo;
   String type;
   int salary;
   String employeetype;
-  Null token;
+  String token;
+  String permission;
   int companyId;
   String joiningDate;
   String contractDate;
@@ -79,6 +80,7 @@ class Users {
       this.salary,
       this.employeetype,
       this.token,
+      this.permission,
       this.companyId,
       this.joiningDate,
       this.contractDate,
@@ -111,6 +113,7 @@ class Users {
     salary = json['salary'];
     employeetype = json['employeetype'];
     token = json['token'];
+    permission = json['permission'];
     companyId = json['company_id'];
     joiningDate = json['joining_date'];
     contractDate = json['contract_date'];
@@ -146,6 +149,7 @@ class Users {
     data['salary'] = this.salary;
     data['employeetype'] = this.employeetype;
     data['token'] = this.token;
+    data['permission'] = this.permission;
     data['company_id'] = this.companyId;
     data['joining_date'] = this.joiningDate;
     data['contract_date'] = this.contractDate;

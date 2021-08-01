@@ -32,42 +32,47 @@ class WorkflowScreen extends StatelessWidget {
         bloc: AppCubit.get(context)..getAllProjects(),
         builder: (context, state) {
           final model = AppCubit.get(context).allProject;
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  color: Colors.white,
+          return model != null
+              ? SingleChildScrollView(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 2.h, vertical: 2.h),
-                        child: defaultText(
-                          text: "projects List (${model.projects.length})",
-                          color: Colors.black,
+                      Container(
+                        width: double.infinity,
+                        color: Colors.white,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 2.h, vertical: 2.h),
+                              child: defaultText(
+                                text:
+                                    "projects List (${model.projects.length})",
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
+                      model != null
+                          ? ListView.separated(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) => buildProjectCard(
+                                  context, model.projects[index]),
+                              separatorBuilder: (context, index) => SizedBox(
+                                    height: 2,
+                                  ),
+                              itemCount: model.projects.length)
+                          : Center(
+                              child: CircularProgressIndicator(),
+                            ),
                     ],
                   ),
-                ),
-                model != null
-                    ? ListView.separated(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) =>
-                            buildProjectCard(context, model.projects[index]),
-                        separatorBuilder: (context, index) => SizedBox(
-                              height: 2,
-                            ),
-                        itemCount: model.projects.length)
-                    : Center(
-                        child: CircularProgressIndicator(),
-                      ),
-              ],
-            ),
-          );
+                )
+              : Center(
+                  child: CircularProgressIndicator(),
+                );
         },
       ),
     );
@@ -170,10 +175,19 @@ Widget buildProjectCard(context, Project model) => InkWell(
                         height: 2.h,
                       ),
                       defaultText(
-                          text: "Completed",
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: kGreenColor)
+                        text: model.status == 2
+                            ? "Completed"
+                            : model.status == 1
+                                ? "OnGoing"
+                                : "Delayed",
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: model.status == 2
+                            ? kGreenColor
+                            : model.status == 1
+                                ? Colors.yellow
+                                : kRedColor,
+                      )
                     ],
                   )
                 ],

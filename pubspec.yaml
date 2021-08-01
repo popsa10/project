@@ -50,6 +50,13 @@ dependencies:
   intl:
   table_calendar:
   google_maps_flutter:
+  url_launcher:
+  map_launcher: ^2.1.1
+  http:
+  multi_select_flutter: ^4.0.0
+  image_picker: ^0.7.0
+  file_picker:
+  open_file:
 
 
 

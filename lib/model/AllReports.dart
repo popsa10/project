@@ -1,19 +1,19 @@
-class AllEmployeesModel {
+class AllReports {
   bool status;
   String errNum;
   String msg;
-  List<Users> users;
+  List<Reports> reports;
 
-  AllEmployeesModel({this.status, this.errNum, this.msg, this.users});
+  AllReports({this.status, this.errNum, this.msg, this.reports});
 
-  AllEmployeesModel.fromJson(Map<String, dynamic> json) {
+  AllReports.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     errNum = json['errNum'];
     msg = json['msg'];
-    if (json['users'] != null) {
-      users = new List<Users>();
-      json['users'].forEach((v) {
-        users.add(new Users.fromJson(v));
+    if (json['reports'] != null) {
+      reports = <Reports>[];
+      json['reports'].forEach((v) {
+        reports.add(new Reports.fromJson(v));
       });
     }
   }
@@ -23,14 +23,113 @@ class AllEmployeesModel {
     data['status'] = this.status;
     data['errNum'] = this.errNum;
     data['msg'] = this.msg;
-    if (this.users != null) {
-      data['users'] = this.users.map((v) => v.toJson()).toList();
+    if (this.reports != null) {
+      data['reports'] = this.reports.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Users {
+class Reports {
+  int id;
+  int locationId;
+  String target;
+  String achievements;
+  String problems;
+  String file1;
+  String file2;
+  String file3;
+  String file4;
+  String taskId;
+  String note;
+  int userId;
+  int approveuserId;
+  int status;
+  String createdAt;
+  String updatedAt;
+  User user;
+  Location location;
+  User approveuser;
+
+  Reports(
+      {this.id,
+      this.locationId,
+      this.target,
+      this.achievements,
+      this.problems,
+      this.file1,
+      this.file2,
+      this.file3,
+      this.file4,
+      this.taskId,
+      this.note,
+      this.userId,
+      this.approveuserId,
+      this.status,
+      this.createdAt,
+      this.updatedAt,
+      this.user,
+      this.location,
+      this.approveuser});
+
+  Reports.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    locationId = json['location_id'];
+    target = json['target'];
+    achievements = json['achievements'];
+    problems = json['problems'];
+    file1 = json['file1'];
+    file2 = json['file2'];
+    file3 = json['file3'];
+    file4 = json['file4'];
+    taskId = json['task_id'];
+    note = json['note'];
+    userId = json['user_id'];
+    approveuserId = json['approveuser_id'];
+    status = json['status'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    location = json['location'] != null
+        ? new Location.fromJson(json['location'])
+        : null;
+    approveuser = json['approveuser'] != null
+        ? new User.fromJson(json['approveuser'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['location_id'] = this.locationId;
+    data['target'] = this.target;
+    data['achievements'] = this.achievements;
+    data['problems'] = this.problems;
+    data['file1'] = this.file1;
+    data['file2'] = this.file2;
+    data['file3'] = this.file3;
+    data['file4'] = this.file4;
+    data['task_id'] = this.taskId;
+    data['note'] = this.note;
+    data['user_id'] = this.userId;
+    data['approveuser_id'] = this.approveuserId;
+    data['status'] = this.status;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    if (this.user != null) {
+      data['user'] = this.user.toJson();
+    }
+    if (this.location != null) {
+      data['location'] = this.location.toJson();
+    }
+    if (this.approveuser != null) {
+      data['approveuser'] = this.approveuser.toJson();
+    }
+    return data;
+  }
+}
+
+class User {
   int id;
   int iqama;
   String iqamaEndDate;
@@ -40,13 +139,13 @@ class Users {
   String passportEndDate;
   String name;
   String email;
-  Null emailVerifiedAt;
+  String emailVerifiedAt;
   int phone;
   String photo;
   String type;
   int salary;
   String employeetype;
-  Null token;
+  String token;
   int companyId;
   String joiningDate;
   String contractDate;
@@ -60,9 +159,8 @@ class Users {
   String workDayes;
   String createdAt;
   String updatedAt;
-  Company company;
 
-  Users(
+  User(
       {this.id,
       this.iqama,
       this.iqamaEndDate,
@@ -91,10 +189,9 @@ class Users {
       this.workEnd,
       this.workDayes,
       this.createdAt,
-      this.updatedAt,
-      this.company});
+      this.updatedAt});
 
-  Users.fromJson(Map<String, dynamic> json) {
+  User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     iqama = json['iqama'];
     iqamaEndDate = json['iqama_end_date'];
@@ -124,8 +221,6 @@ class Users {
     workDayes = json['work_dayes'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    company =
-        json['company'] != null ? new Company.fromJson(json['company']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -159,40 +254,34 @@ class Users {
     data['work_dayes'] = this.workDayes;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    if (this.company != null) {
-      data['company'] = this.company.toJson();
-    }
     return data;
   }
 }
 
-class Company {
+class Location {
   int id;
-  String name;
-  String email;
-  String photo;
-  String password;
-  String rememberToken;
+  String title;
+  String location;
+  String lat;
+  String lang;
   String createdAt;
   String updatedAt;
 
-  Company(
+  Location(
       {this.id,
-      this.name,
-      this.email,
-      this.photo,
-      this.password,
-      this.rememberToken,
+      this.title,
+      this.location,
+      this.lat,
+      this.lang,
       this.createdAt,
       this.updatedAt});
 
-  Company.fromJson(Map<String, dynamic> json) {
+  Location.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
-    email = json['email'];
-    photo = json['photo'];
-    password = json['password'];
-    rememberToken = json['remember_token'];
+    title = json['title'];
+    location = json['location'];
+    lat = json['lat'];
+    lang = json['lang'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
@@ -200,11 +289,10 @@ class Company {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['photo'] = this.photo;
-    data['password'] = this.password;
-    data['remember_token'] = this.rememberToken;
+    data['title'] = this.title;
+    data['location'] = this.location;
+    data['lat'] = this.lat;
+    data['lang'] = this.lang;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     return data;

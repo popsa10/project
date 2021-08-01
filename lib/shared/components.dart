@@ -436,3 +436,105 @@ Widget custom_row({@required String title, @required String val}) {
     ],
   );
 }
+
+void addNote(context, function, controller) {
+  showDialog<String>(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      title: const Text(
+        'Send Notes',
+        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+      ),
+      content: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          isDense: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.black, width: 2),
+          ),
+          hintText: "Send Note To Employee",
+          filled: true,
+          fillColor: Colors.white,
+          hintStyle: const TextStyle(color: Color(0xffC8C8C8), fontSize: 11),
+        ),
+      ),
+      actions: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(left: 10, right: 10, bottom: 18),
+          child: defaultButton(
+            onPressed: function,
+            width: MediaQuery.of(context).size.width - 100,
+            color: kPrimaryColor,
+            text: "Send",
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+customNavigationBar({currentIndex, cubit}) {
+  return Container(
+    height: 80,
+    decoration: BoxDecoration(
+        borderRadius: BorderRadiusDirectional.only(
+            topStart: Radius.circular(10), topEnd: Radius.circular(10))),
+    child: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        type: BottomNavigationBarType.fixed,
+        selectedLabelStyle:
+            const TextStyle(fontSize: 11, fontWeight: FontWeight.normal),
+        currentIndex: currentIndex,
+        selectedItemColor: kRedColor,
+        selectedIconTheme: const IconThemeData(color: kRedColor),
+        onTap: (value) {
+          cubit.changeNavBar(value);
+        },
+        items: [
+          BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.only(bottom: 5),
+                child:
+                    Image.asset("assets/images/workflow (1).png", width: 17.5),
+              ),
+              label: "workflow"),
+          BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.only(bottom: 5),
+                child: Image.asset(
+                  "assets/images/event-1.png",
+                  width: 17.5,
+                ),
+              ),
+              label: "Attendance"),
+          BottomNavigationBarItem(
+            label: "",
+            icon: FloatingActionButton(
+              onPressed: () {
+                cubit.changeNavBar(2);
+              },
+              child: Image.asset("assets/images/Add.png"),
+            ),
+          ),
+          BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.only(bottom: 5),
+                child: Image.asset(
+                  "assets/images/layer.png",
+                  width: 17.5,
+                ),
+              ),
+              label: "Projects"),
+          BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.only(bottom: 5),
+                child: Image.asset(
+                  "assets/images/dashboard-interface (1).png",
+                  width: 17.5,
+                ),
+              ),
+              label: "Vacations"),
+        ]),
+  );
+}

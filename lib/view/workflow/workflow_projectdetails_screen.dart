@@ -16,6 +16,7 @@ class WorkFlowProjectDetails extends StatelessWidget {
   final Project model;
   WorkFlowProjectDetails({Key key, this.model}) : super(key: key);
   final TextEditingController searchController = TextEditingController();
+  final TextEditingController noteController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -170,7 +171,16 @@ class WorkFlowProjectDetails extends StatelessWidget {
                           defaultButton(
                             text: "Add Note",
                             width: 30.w,
-                            onPressed: () {},
+                            onPressed: () {
+                              addNote(context, () {
+                                AppCubit.get(context)
+                                    .sendNote(noteController.text,
+                                        model.employees.first.name)
+                                    .then((value) {
+                                  showToast(text: "Note Add Successfully");
+                                });
+                              }, noteController);
+                            },
                           ),
                         ],
                       )
@@ -210,173 +220,186 @@ class WorkFlowProjectDetails extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget buildProjectTasksCard(context, Task model) => Stack(
-      alignment: AlignmentDirectional.topStart,
-      children: [
-        Container(
-          decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadiusDirectional.only(
-                  topStart: Radius.circular(15), topEnd: Radius.circular(15))),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            child: Column(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 1.w,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        defaultText(
-                            text:
-                                "${DateFormat("yyyy-MM-dd").format(model.start)} - - - - - ${DateFormat("yyyy-MM-dd").format(model.end)}",
-                            color: kTitleColor,
-                            fontSize: 12),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        defaultText(
-                            text: "Task :  ${model.name}",
-                            color: kGreyColor,
-                            fontSize: 12),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        defaultText(
-                            text: "Task Admin :   ${model.users}",
-                            color: kGreyColor,
-                            fontSize: 12),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        defaultText(
-                            text: "Assigned To",
-                            color: kGreyColor,
-                            fontSize: 12),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        CircleAvatar(
-                          radius: 25,
-                          backgroundColor: Colors.grey[300],
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Column(
+  Widget buildProjectTasksCard(context, Task model) => Stack(
+        alignment: AlignmentDirectional.topStart,
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadiusDirectional.only(
+                    topStart: Radius.circular(15),
+                    topEnd: Radius.circular(15))),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              child: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 1.w,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CircleAvatar(
-                            radius: 9.w,
-                          ),
+                          defaultText(
+                              text:
+                                  "${DateFormat("yyyy-MM-dd").format(model.start)} - - - - - ${DateFormat("yyyy-MM-dd").format(model.end)}",
+                              color: kTitleColor,
+                              fontSize: 12),
                           SizedBox(
-                            height: 2.h,
+                            height: 1.h,
                           ),
                           defaultText(
-                            text: model.status == 2
-                                ? "Completed"
-                                : model.status == 1
-                                    ? "inProgress"
-                                    : "Delayed",
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: model.status == 2
-                                ? kGreenColor
-                                : model.status == 1
-                                    ? Colors.yellow
-                                    : kRedColor,
-                          )
+                              text: "Task :  ${model.name}",
+                              color: kGreyColor,
+                              fontSize: 12),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          defaultText(
+                              text: "Task Admin :   ${model.users}",
+                              color: kGreyColor,
+                              fontSize: 12),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          defaultText(
+                              text: "Assigned To",
+                              color: kGreyColor,
+                              fontSize: 12),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          CircleAvatar(
+                            radius: 25,
+                            //backgroundImage: NetworkImage(baseUrl + model.),
+                            backgroundColor: Colors.grey[300],
+                          ),
                         ],
                       ),
-                    ),
-                    SizedBox(
-                      width: 1.w,
-                    ),
-                    PopupMenuButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      itemBuilder: (context) {
-                        return [
-                          PopupMenuItem(
-                            value: 'edit',
-                            child: Text('Edit'),
-                          ),
-                          PopupMenuItem(
-                            onTap: () {
-                              AppCubit.get(context).deleteTask(model.id);
-                            },
-                            value: 'delete',
-                            child: Text('Delete'),
-                          )
-                        ];
-                      },
-                      onSelected: (String value) {
-                        print('You Click on po up menu item $value');
-                      },
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 1.h,
-                ),
-                Container(
-                  height: 1,
-                  color: kGreyColor,
-                ),
-                SizedBox(
-                  height: 1.h,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          navigateTo(
-                              context,
-                              TaskDetails(
-                                model: model,
-                              ));
-                        },
-                        child: defaultText(
-                            text: "More detailed",
-                            color: kTitleColor,
-                            fontSize: 14,
-                            fontWeight: FontWeight.normal),
+                      const Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                              radius: 9.w,
+                            ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            defaultText(
+                              text: model.status == 2
+                                  ? "Completed"
+                                  : model.status == 1
+                                      ? "inProgress"
+                                      : "Delayed",
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: model.status == 2
+                                  ? kGreenColor
+                                  : model.status == 1
+                                      ? Colors.yellow
+                                      : kRedColor,
+                            )
+                          ],
+                        ),
                       ),
-                      const Text(
-                        "Add Note",
-                        style: TextStyle(
-                            color: kGreenColor,
-                            decoration: TextDecoration.underline),
+                      SizedBox(
+                        width: 1.w,
+                      ),
+                      PopupMenuButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        itemBuilder: (context) {
+                          return [
+                            PopupMenuItem(
+                              value: 'edit',
+                              child: Text('Edit'),
+                            ),
+                            PopupMenuItem(
+                              onTap: () {
+                                AppCubit.get(context).deleteTask(model.id);
+                              },
+                              value: 'delete',
+                              child: Text('Delete'),
+                            )
+                          ];
+                        },
+                        onSelected: (String value) {
+                          print('You Click on po up menu item $value');
+                        },
                       )
                     ],
                   ),
-                )
-              ],
+                  SizedBox(
+                    height: 1.h,
+                  ),
+                  Container(
+                    height: 1,
+                    color: kGreyColor,
+                  ),
+                  SizedBox(
+                    height: 1.h,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            navigateTo(
+                                context,
+                                TaskDetails(
+                                  model: model,
+                                ));
+                          },
+                          child: defaultText(
+                              text: "More detailed",
+                              color: kTitleColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            addNote(context, () {
+                              AppCubit.get(context)
+                                  .sendNote(noteController.text, model.users)
+                                  .then((value) {
+                                showToast(text: "Note Add Successfully");
+                              });
+                            }, noteController);
+                          },
+                          child: Text(
+                            "Add Note",
+                            style: TextStyle(
+                                color: kGreenColor,
+                                decoration: TextDecoration.underline),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: 3.w,
-          height: 11.h,
-          decoration: BoxDecoration(
-              color: model.status == 2
-                  ? kGreenColor
-                  : model.status == 1
-                      ? Colors.yellow
-                      : kRedColor,
-              borderRadius: BorderRadiusDirectional.only(
-                  topStart: Radius.circular(20),
-                  bottomEnd: Radius.circular(20))),
-        ),
-      ],
-    );
+          Container(
+            width: 3.w,
+            height: 11.h,
+            decoration: BoxDecoration(
+                color: model.status == 2
+                    ? kGreenColor
+                    : model.status == 1
+                        ? Colors.yellow
+                        : kRedColor,
+                borderRadius: BorderRadiusDirectional.only(
+                    topStart: Radius.circular(20),
+                    bottomEnd: Radius.circular(20))),
+          ),
+        ],
+      );
+}

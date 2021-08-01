@@ -26,7 +26,7 @@ class ProjectDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: CustomAppBar(title: "New building Project", search: false),
+        appBar: CustomAppBar(title: projectModel.name, search: false),
         body: DefaultTabController(
           initialIndex: 0,
           length: tabs.length,

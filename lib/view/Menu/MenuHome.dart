@@ -1,7 +1,9 @@
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:project/shared/components.dart';
+import 'package:project/shared/cubit/app_cubit.dart';
 import 'package:project/view/Employee/addEmployee.dart';
+import 'package:project/view/layout/home_layout.dart';
 import 'package:project/view/location/locations_screen.dart';
 import 'package:project/view/notifications/all_notification_screen.dart';
 import 'package:project/view/payroll/payroll_screen.dart';
@@ -46,7 +48,7 @@ class _MenuScreenState extends State<MenuScreen> {
                             }),
                         columnTitle(
                             titleImage: "assets/images/car (2).png",
-                            titleText: "Vechails",
+                            titleText: "Vehicles",
                             function: () {
                               navigateTo(context, AllVehiclesScreen());
                             }),
@@ -66,7 +68,7 @@ class _MenuScreenState extends State<MenuScreen> {
                             titleImage: "assets/images/Group 69804.png",
                             titleText: "Vaction",
                             function: () {
-                              navigateTo(context, VacationsScreen());
+                              navigateTo(context, HomeLayout());
                             }),
                       ],
                     )),
@@ -134,28 +136,16 @@ class _MenuScreenState extends State<MenuScreen> {
     );
   }
 
-  Widget close() => Padding(
-        padding: EdgeInsets.only(
-          top: 15,
-          right: 3,
-        ),
-        child: Container(
-          height: 45,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Center(
-                child: IconButton(
-                    icon: Icon(
-                      Icons.close,
-                      size: 26,
-                    ),
-                    onPressed: () {}),
-              ),
-            ],
-          ),
-        ),
+  Widget close() => Align(
+        alignment: Alignment.centerRight,
+        child: IconButton(
+            icon: Icon(
+              Icons.close,
+              size: 26,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
       );
 
   Widget expansionTileCard(
@@ -250,13 +240,6 @@ class _MenuScreenState extends State<MenuScreen> {
                         fit: BoxFit.fill,
                       ),
                     ),
-                    // Container(
-                    //   height: 30,
-                    //   width: 30,
-                    //   decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.circular(30),
-                    //       image: DecorationImage(image: AssetImage(image))),
-                    // ),
                     SizedBox(
                       width: 20,
                     ),
